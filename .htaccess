@@ -1,0 +1,38 @@
+# Apache mod_rewrite for HoneyDB
+RewriteEngine on
+# be sure to set the RewriteBase to the same as $WEBROOT in index.php
+RewriteBase /honeydb/
+
+RewriteRule ^((sbin|data/)) - [R=404,L,NC]
+RewriteRule ^logger/?$ index.php?c=logger
+RewriteRule ^geoip/(.+)/?$ index.php?c=geoip&i=$1
+RewriteRule ^whois-data/(.+)/(.+)/? index.php?c=whois-data&i=$1&h=$2
+RewriteRule ^top-ip/?$ index.php?c=top-ip
+RewriteRule ^top-service/?$ index.php?c=top-service
+RewriteRule ^shodan/([\w\.]+)/?$ index.php?c=shodan&i=$1
+RewriteRule ^ip/(.+)/([\w-\.]+)/?$ index.php?c=ip&i=$1&s=$2
+RewriteRule ^ip/([\w\.]+)/?$ index.php?c=ip&i=$1
+RewriteRule ^ip/?$ index.php?c=ip
+RewriteRule ^service/(.+)/(.+)/?$ index.php?c=service&s=$1&i=$2
+RewriteRule ^service/([\w-\.]+)/?$ index.php?c=service&s=$1
+RewriteRule ^service/?$ index.php?c=service
+RewriteRule ^service-port/([\w-\.]+)?$ index.php?c=service-port&s=$1
+RewriteRule ^date/([\w-]+)/?$ index.php?c=date&d=$1
+RewriteRule ^date/?$ index.php?c=date
+RewriteRule ^event/?$ index.php?c=event
+RewriteRule ^event/service/([\w-\.]+)/?$ index.php?c=event&s=$1
+RewriteRule ^event/ip/([\w\.]+)/?$ index.php?c=event&i=$1
+RewriteRule ^event/service/([\w-\.]+)/ip/([\w\.]+)/?$ index.php?c=event&s=$1&i=$2
+RewriteRule ^event/ip/([\w\.]+)/service/([\w-\.]+)/?$ index.php?c=event&i=$1&s=$2
+RewriteRule ^event-data/(.+)/?$ index.php?c=event-data&h=$1
+RewriteRule ^bad-hosts/?$ index.php?c=bad-hosts
+RewriteRule ^chart-data/(.+)/?$ index.php?c=chart-data&a=bar
+RewriteRule ^view-ip/?$ index.php?c=view-ip
+RewriteRule ^view-ip/(.+)/?$ index.php?c=view-ip&i=$1
+RewriteRule ^view-service/?$ index.php?c=view-service
+RewriteRule ^view-service/([\w-\.]+)/? index.php?c=view-service&s=$1
+RewriteRule ^view-date/?$ index.php?c=view-date
+RewriteRule ^view-date/([\d-]+)/? index.php?c=view-date&d=$1
+RewriteRule ^view-date/([\d-]+)/service/? index.php?c=view-date&d=$1&v=service
+RewriteRule ^about/?$ index.php?c=about
+

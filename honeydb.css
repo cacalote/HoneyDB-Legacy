@@ -1,0 +1,63 @@
+/* honeydb.css */
+
+#top-ip > div {
+	border:0px solid black;
+	height:50px;
+	font-size:small;
+	margin-bottom:10px;
+	cursor:pointer;
+}
+
+#top-service > div {
+	border:0px solid black;
+	height:50px;
+	font-size:small;
+	margin-bottom:10px;
+	cursor:pointer;
+}
+
+#ip-all {
+	cursor:pointer;
+}
+
+#service-all {
+	cursor:pointer;
+}
+
+#hosts {
+	cursor:pointer;
+	width:150px;
+	font-size:12px;
+}
+
+#events {
+	font-size:12px;
+	height:600px;
+	width:210px;
+	overflow-y:scroll;
+}
+
+#services > div {
+	cursor:pointer;
+	width:150px;
+	font-size:12px;
+}
+
+#events > div {
+	cursor:pointer;
+}
+
+#request-data {
+	border:0px;
+	background-color:#f1f1f1;
+	font-family:courier
+}
+
+#view {
+	margin-left:25px;
+}
+
+#view-title {
+	font-size:18px;
+}
+

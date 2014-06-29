@@ -1,0 +1,8 @@
+{
+	"require": {
+		"geoip2/geoip2": "0.5.*",
+		"adodb/adodb-php": "dev-master",
+		"frameworks/jquery": "2.0.3",
+		"twitter/bootstrap": "3.0.3"
+	}
+}
