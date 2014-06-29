@@ -16,6 +16,7 @@ Getting started:
 mysql -u <db username> -p <db name> < create.sql
 
 5. Configure HoneyDB by editing the constants section of the index.php file:
+```php
 // constants
 $WEBROOT        = ''; // the root path for the web site starting at "/"
 $SHODAN_API_KEY = ''; // if you have a shodan api key
@@ -26,6 +27,9 @@ $DB_HOST        = ''; // your mysql database host, typically "localhost"
 $DB_NAME        = ''; // the name of the database you created.
 $DB_USER        = ''; // the database user you created.
 $DB_PASS        = ''; // the password for the database user.
+
+```
+
 
 6. Edit .htaccess file. Make sure the RewriteBase is set to the same value as $WEBROOT in index.php
 
