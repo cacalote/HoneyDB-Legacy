@@ -1,7 +1,7 @@
 HoneyDB
 =======
 
-Database and web interface for HoneyPy honeypot logs
+Database and web interface for HoneyPy honeypot logs. Example, http://www.foospidy.com/opt/honeydb/
 
 
 Getting started:
