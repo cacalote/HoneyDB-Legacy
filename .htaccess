@@ -10,6 +10,7 @@ RewriteRule ^whois-data/(.+)/(.+)/? index.php?c=whois-data&i=$1&h=$2
 RewriteRule ^top-ip/?$ index.php?c=top-ip
 RewriteRule ^top-service/?$ index.php?c=top-service
 RewriteRule ^shodan/([\w\.]+)/?$ index.php?c=shodan&i=$1
+RewriteRule ^projecthoneypot/([\w\.]+)/?$ index.php?c=projecthoneypot&i=$1
 RewriteRule ^ip/(.+)/([\w-\.]+)/?$ index.php?c=ip&i=$1&s=$2
 RewriteRule ^ip/([\w\.]+)/?$ index.php?c=ip&i=$1
 RewriteRule ^ip/?$ index.php?c=ip

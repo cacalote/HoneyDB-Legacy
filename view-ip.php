@@ -51,13 +51,15 @@ $('#ip-all').children('div').each(function(i) {
 	echo '<td valign="top"><div id="services"></div></td>';
 	echo '<td valign="top"><div id="events"></div></td>';
 	echo '<td valign="top">';
-		echo '<div id="tools">Tools: <button id="php">php</button> <button id="dshield">dshield</button> <button id="firyx">firyx</button> <button id="twitter">twitter</button> <button id="google">google</button> <button id="virustotal">virus total</button></div><br>';
+		echo '<div id="tools">Tools: <button id="dshield">dshield</button> <button id="firyx">firyx</button> <button id="twitter">twitter</button> <button id="google">google</button> <button id="virustotal">virus total</button></div><br>';
 		echo '<div id="service-info">&nbsp;</div>';
 		echo '<div>Request Data</div>';
 		echo '<textarea cols="100" rows="7" id="request-data">Select a RX event.</textarea>';
 		echo '<br><br>';
-		echo 'Host Ports and  Banners';
-		//echo '<textarea cols="100" rows="7" id="shodan"></textarea>';
+		echo 'Project HoneyPot';
+		echo '<pre id="projecthoneypot" style="width:100%;"></pre>';
+		echo '<br><br>';
+		echo 'Shodan';
 		echo '<pre id="shodan" style="width:100%;"></pre>';
 		echo '<br><br>';
 	echo '</td>';
@@ -84,6 +86,7 @@ $('#services').children('div').click(function(event) {
 	document.getElementById('events').innerHTML = getEvents('<?php echo $WEBROOT; ?>', service[0], '<?php echo $i; ?>');
 });
 
+$("#projecthoneypot").load('<?php echo $WEBROOT; ?>projecthoneypot/<?php echo $i; ?>');
 $("#shodan").load('<?php echo $WEBROOT; ?>shodan/<?php echo $i; ?>');
 
 /*
@@ -92,11 +95,6 @@ $('#whois').click(function(event) {
 	window.open('https://who.is/whois-ip/ip-address/<?php echo $i; ?>', 'whois', 'width=800,height=600,toolbar=no,scrollbars=yes');
 });
 */
-
-$('#php').click(function(event) {
-        event.preventDefault();
-        window.open('https://www.projecthoneypot.org/ip_<?php echo $i; ?>', 'php', 'width=800,height=600,toolbar=no,scrollbars=yes');
-});
 
 $('#dshield').click(function(event) {
         event.preventDefault();

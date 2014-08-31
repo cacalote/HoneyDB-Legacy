@@ -35,8 +35,10 @@ $('#service-all').children('div').click(function(event) {
 		echo '<div>Request Data</div>';
 		echo '<textarea cols="100" rows="7" id="request-data">Select a RX event.</textarea>';
 		echo '<br><br>';
-		echo 'Host Ports and  Banners';
-		//echo '<textarea cols="100" rows="7" id="shodan"></textarea>';
+		echo 'Project HoneyPot';
+		echo '<pre id="projecthoneypot" style="width:100%;"></pre>';
+		echo '<br><br>';
+		echo 'Shodan';
 		echo '<pre id="shodan" style="width:100%;">Select a host.</pre>';
 		echo '<br><br>';
 	echo '</td>';
@@ -55,12 +57,8 @@ $('#hosts').children('div').click(function(event) {
 	document.getElementById('ip-info').innerHTML = ip[0];
 	document.getElementById('tools').style.display = '';
 	document.getElementById('events').innerHTML = getEvents('<?php echo $WEBROOT; ?>', '<?php echo $s; ?>', ip[0]);
+	$("#projecthoneypot").load('<?php echo $WEBROOT; ?>projecthoneypot/<?php echo $i; ?>');
 	$("#shodan").load('<?php echo $WEBROOT; ?>shodan/' + ip[0]);
-});
-
-$('#php').click(function(event) {
-        event.preventDefault();
-        window.open('https://www.projecthoneypot.org/ip_' + document.getElementById('ip-info').innerHTML, 'php', 'width=800,height=600,toolbar=no,scrollbars=yes');
 });
 
 $('#dshield').click(function(event) {

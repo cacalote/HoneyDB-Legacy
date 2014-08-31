@@ -4,6 +4,7 @@ require 'vendor/autoload.php';
 // constants
 $WEBROOT        = '/honeydb/';
 $SHODAN_API_KEY = '';
+$PH_API_KEY     = '';
 $LOGGER_ENABLE  = 'No';
 $LOGGER_SECRET  = ''; // suggestion, generate secret from https://www.grc.com/passwords.htm
 $LOGGER_FILTER  = ''; // optional, comma delimated ip address list
@@ -46,6 +47,10 @@ switch($_GET['c']) {
 
 	case 'shodan':
 		include('bin/shodan.php');
+		break;
+
+	case 'projecthoneypot':
+		include('bin/projecthoneypot.php');
 		break;
 
 	case 'ip':
