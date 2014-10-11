@@ -33,7 +33,7 @@ $('#ip-all').children('div').each(function(i) {
                 dataType: 'json',
                 url:      '<?php echo $WEBROOT; ?>geoip/' + ip[0],
                 success:  function(data) {
-                        html = '<div style="font-size:small;"><img src="http://foospidy.com/opt/honeydb/img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName'] + '</div>';
+                        html = '<div style="font-size:small;"><img src="https://foospidy.com/opt/honeydb/img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName'] + '</div>';
                         $('#ip-' + i).append(html);
                 }
         });
@@ -74,7 +74,7 @@ $.ajax({
 	dataType: 'json',
 	url:      '<?php echo $WEBROOT; ?>geoip/<?php echo $i; ?>',
 	success:  function(data) {
-		$('#country').append('<img src="http://foospidy.com/opt/honeydb/img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName']);
+		$('#country').append('<img src="https://foospidy.com/opt/honeydb/img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName']);
 	}
 });
 
