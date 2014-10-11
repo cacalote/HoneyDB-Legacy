@@ -57,7 +57,7 @@ $.ajax({
 	dataType: 'json',
 	url:      '<?php echo $WEBROOT; ?>geoip/<?php echo $i; ?>',
 	success:  function(data) {
-		$('#country').append('<img src="http://foospidy.com/opt/honeydb/img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName']);
+		$('#country').append('<img src="https://foospidy.com/opt/honeydb/img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName']);
 	}
 });
 
