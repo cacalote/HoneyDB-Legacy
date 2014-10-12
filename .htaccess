@@ -1,3 +1,7 @@
+# Apache headers; enable headers module: a2enmod headers
+Header set X-Frame-Options "DENY"
+Header set X-Content-Type-Options "nosniff"
+
 # Apache mod_rewrite for HoneyDB
 RewriteEngine on
 # be sure to set the RewriteBase to the same as $WEBROOT in index.php
