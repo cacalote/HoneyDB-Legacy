@@ -57,7 +57,7 @@ $('#hosts').children('div').click(function(event) {
 	document.getElementById('ip-info').innerHTML = ip[0];
 	document.getElementById('tools').style.display = '';
 	document.getElementById('events').innerHTML = getEvents('<?php echo $WEBROOT; ?>', '<?php echo $s; ?>', ip[0]);
-	$("#projecthoneypot").load('<?php echo $WEBROOT; ?>projecthoneypot/<?php echo $i; ?>');
+	$("#projecthoneypot").load('<?php echo $WEBROOT; ?>projecthoneypot/' + ip[0]);
 	$("#shodan").load('<?php echo $WEBROOT; ?>shodan/' + ip[0]);
 });
 
