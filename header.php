@@ -25,6 +25,8 @@
 
 <script type="text/javascript" src="<?php echo $WEBROOT; ?>lib/jplot/jquery.jqplot.min.js"></script>
 <script type="text/javascript" src="<?php echo $WEBROOT; ?>lib/jplot/plugins/jqplot.barRenderer.min.js"></script>
+<script type="text/javascript" src="<?php echo $WEBROOT; ?>lib/jplot/plugins/jqplot.pieRenderer.min.js"></script>
+<script type="text/javascript" src="<?php echo $WEBROOT; ?>lib/jplot/plugins/jqplot.highlighter.min.js"></script>
 <script type="text/javascript" src="<?php echo $WEBROOT; ?>lib/jplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
 <script type="text/javascript" src="<?php echo $WEBROOT; ?>lib/jplot/plugins/jqplot.pointLabels.min.js"></script>
 
