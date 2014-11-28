@@ -1,15 +1,22 @@
 /* honeydb.js */
-function getTopIp() {
-        html = '';
+function getTopIp(days) {
+		days = typeof days !== 'undefined' ? days : 0;
+        html       = '';
+        append_url = '';
+
+        if(days>0) {
+        	append_url = '/days/' + days;
+        }
+
         $.ajax({
                 async:    false,
                 dataType: 'json',
-                url:      'top-ip',
+                url:      'top-ip' + append_url,
                 success:  function(data) {
                         var i = 0;
                         $.each(data, function() {
-                                i++;
                                 html += '<div id="top-ip-' + i + '">' + this['remote_host'] + ' (' + this['ip_count'] + ')</div>';
+                                i++;
                         });
                 }
         });
@@ -85,8 +92,8 @@ function getDates(webRoot, date) {
                 success:  function(data) {
                         var i = 0;
                         $.each(data, function() {
-                                i++;
                                 html += '<div id="date-' + i + '">' + this['date'] + ' (' + this['date_count'] + ')</div>';
+                                i++;
                         });
                 }
         });
@@ -154,12 +161,19 @@ function loadBadHosts() {
 	document.getElementById('main').innerHTML = getBadHosts();
 }
 
-function getTopService() {
+function getTopService(days) {
+		days = typeof days !== 'undefined' ? days : 0;
         html = '';
+        append_url = '';
+
+		if(days>0) {
+        	append_url = '/days/' + days;
+        }
+
         $.ajax({
                 async:    false,
                 dataType: 'json',
-                url:      'top-service',
+                url:      'top-service' + append_url,
                 success:  function(data) {
                         var i = 0;
                         $.each(data, function() {
@@ -170,4 +184,3 @@ function getTopService() {
         });
         return html;
 }
-
