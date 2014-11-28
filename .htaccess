@@ -12,7 +12,9 @@ RewriteRule ^logger/?$ index.php?c=logger
 RewriteRule ^geoip/(.+)/?$ index.php?c=geoip&i=$1
 RewriteRule ^whois-data/(.+)/(.+)/? index.php?c=whois-data&i=$1&h=$2
 RewriteRule ^top-ip/?$ index.php?c=top-ip
+RewriteRule ^top-ip/days/(\d+)/?$ index.php?c=top-ip&b=days&days=$1
 RewriteRule ^top-service/?$ index.php?c=top-service
+RewriteRule ^top-service/days/(\d+)/?$ index.php?c=top-service&b=days&days=$1
 RewriteRule ^shodan/([\w\.]+)/?$ index.php?c=shodan&i=$1
 RewriteRule ^projecthoneypot/([\w\.]+)/?$ index.php?c=projecthoneypot&i=$1
 RewriteRule ^ip/(.+)/([\w-\.]+)/?$ index.php?c=ip&i=$1&s=$2
@@ -40,4 +42,3 @@ RewriteRule ^view-date/?$ index.php?c=view-date
 RewriteRule ^view-date/([\d-]+)/? index.php?c=view-date&d=$1
 RewriteRule ^view-date/([\d-]+)/service/? index.php?c=view-date&d=$1&v=service
 RewriteRule ^about/?$ index.php?c=about
-
