@@ -1,5 +1,6 @@
 <?php
 require 'vendor/autoload.php';
+include 'common-functions.php';
 
 // constants
 $WEBROOT        = '/honeydb/';
@@ -12,6 +13,7 @@ $DB_HOST        = 'localhost';
 $DB_NAME        = '';
 $DB_USER        = '';
 $DB_PASS        = '';
+$DEFAULT_DAYS   = 10;
 
 if(!isset($_GET['c'])) { $_GET['c'] = 'default'; }
 
