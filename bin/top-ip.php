@@ -18,15 +18,8 @@ if(isset($_GET['days'])) {
 	$days = 10;
 }
 
-switch($_GET['b']) {
-	case 'days':
-		$params = array($days);
-		$rs = $db->Execute("SELECT remote_host, COUNT(remote_host) AS ip_count FROM honeypy WHERE date >= (CURDATE() - INTERVAL ? DAY) GROUP BY remote_host ORDER BY ip_count DESC LIMIT 10;", $params);
-		break;
-	default:
-		$rs = $db->Execute("SELECT remote_host, COUNT(remote_host) AS ip_count FROM honeypy GROUP BY remote_host ORDER BY ip_count DESC LIMIT 10;");
-		break;
-}
+$params = array($days);
+$rs = $db->Execute("SELECT remote_host, COUNT(remote_host) AS ip_count FROM honeypy WHERE date >= (CURDATE() - INTERVAL ? DAY) GROUP BY remote_host ORDER BY ip_count DESC LIMIT 10;", $params);
 
 $ipArray = array();
 foreach($rs as $row) {
