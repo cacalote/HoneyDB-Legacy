@@ -1,11 +1,18 @@
+<?php
+if(isset($_REQUEST['days'])) {
+	$DAYS = intval($_REQUEST['days']);
+} else {
+	$DAYS = $DEFAULT_DAYS;
+}
+?>
 <div class="container">
 
 <div id="main" style="margin-top:30px" align="center">
 	<div id="chartdiv" style="height:200px;width:800px;margin-bottom:30px;"></div>
 	<table align="center" width="90%">
 	<tr>
-		<td align="center">Top Attack Hosts<br><small>(last 10 days)</small></td>
-		<td align="center">Top Attacked Services<br><small>(last 10 days)</small></td>
+		<td align="center">Top Attack Hosts<br><small>(last <?php echo $DAYS; ?> days)</small></td>
+		<td align="center">Top Attacked Services<br><small>(last <?php echo $DAYS; ?> days)</small></td>
 	</tr>
 		<td id="top-ip-chart" valign="top" align="center" width="50%"></td>
 		<td id="top-service-chart" valign="top" align="center"></td>
@@ -25,8 +32,8 @@
 <script language="javascript">
 $(document).ready(function() {
 	// get top list of top ip and top service
-	document.getElementById('top-ip').innerHTML      = getTopIp(10);
-	document.getElementById('top-service').innerHTML = getTopService(10);
+	document.getElementById('top-ip').innerHTML      = getTopIp(<?php echo $DAYS; ?>);
+	document.getElementById('top-service').innerHTML = getTopService(<?php echo $DAYS; ?>);
 
 	// increase font size of first row
 	$('#top-ip-chart-mouseover').css('font-size', '30px');
@@ -54,7 +61,7 @@ $(document).ready(function() {
 	$.ajax({
 			async:    false,
 			dataType: 'json',
-			url:      'chart-data/bar',
+			url:      'chart-data/bar/days/<?php echo $DAYS; ?>',
 			success:  function(data) {
 					$.each(data, function() {
 							s1.push(this['day_count']);
@@ -68,20 +75,18 @@ $(document).ready(function() {
 		seriesDefaults:{
 				renderer:$.jqplot.BarRenderer,
 				rendererOptions: {fillToZero: true}
-		},
+		},	
         axes: {
 			// Use a category axis on the x axis and use our custom ticks.
 			xaxis: {
 				renderer: $.jqplot.CategoryAxisRenderer,
 				ticks: t1
-			/*
-			tickOptions: {
-				show:false
-			},
-			rendererOptions: {
-				drawBaseline:false
-			}
-			*/
+				<?php if($DAYS > 10) { ?>
+				, tickOptions: {
+					show: false,
+					showMark: false
+				}
+				<?php } ?>
 			},
 			// Pad the y axis just a little so bars can get close to, but
 			// not touch, the grid boundaries.  1.2 is the default padding.
@@ -101,7 +106,7 @@ $(document).ready(function() {
 	$.ajax({
 			async:    false,
 			dataType: 'json',
-			url:      'top-ip/days/10',
+			url:      'top-ip/days/<?php echo $DAYS; ?>',
 			success:  function(data) {
 					$.each(data, function() {
 							ip = [];
@@ -133,7 +138,7 @@ $(document).ready(function() {
 	$.ajax({
 			async:    false,
 			dataType: 'json',
-			url:      'top-service/days/10',
+			url:      'top-service/days/<?php echo $DAYS; ?>',
 			success:  function(data) {
 					$.each(data, function() {
 							service = [];
