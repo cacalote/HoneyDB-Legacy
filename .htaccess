@@ -33,6 +33,7 @@ RewriteRule ^event/service/([\w-\.]+)/ip/([\w\.]+)/?$ index.php?c=event&s=$1&i=$
 RewriteRule ^event/ip/([\w\.]+)/service/([\w-\.]+)/?$ index.php?c=event&i=$1&s=$2
 RewriteRule ^event-data/(.+)/?$ index.php?c=event-data&h=$1
 RewriteRule ^bad-hosts/?$ index.php?c=bad-hosts
+RewriteRule ^chart-data/(.+)/days/(\d+)/?$ index.php?c=chart-data&a=bar&days=$2
 RewriteRule ^chart-data/(.+)/?$ index.php?c=chart-data&a=bar
 RewriteRule ^view-ip/?$ index.php?c=view-ip
 RewriteRule ^view-ip/(.+)/?$ index.php?c=view-ip&i=$1
