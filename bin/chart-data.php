@@ -1,10 +1,17 @@
 <?php
+if(isset($_REQUEST['days'])) {
+	// validate
+	$days = intval($_REQUEST['days']);
+} else {
+	$days = $DEFAULT_DAYS;
+}
 
 switch($_GET['a']) {
 	case 'bar':
-		$sql  = "SELECT DATE_FORMAT(date_time, '%Y-%m-%d') AS day, COUNT(*) AS day_count FROM honeypy l ";
-		$sql .= "GROUP BY DATE_FORMAT(date_time, '%Y-%m-%d') ORDER BY date_time DESC LIMIT 10;";
-		$rs   = $db->Execute($sql);
+		$params = array($days);
+		$sql    = "SELECT DATE_FORMAT(date_time, '%Y-%m-%d') AS day, COUNT(*) AS day_count FROM honeypy l ";
+		$sql   .= "GROUP BY DATE_FORMAT(date_time, '%Y-%m-%d') ORDER BY date_time DESC LIMIT ?;";
+		$rs     = $db->Execute($sql, $params);
 
 		$dataArray = array();
 
