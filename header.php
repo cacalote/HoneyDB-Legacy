@@ -65,3 +65,5 @@ $(document).ready(function() {
         </div><!--/.nav-collapse -->
       </div>
 </div>
+
+<div class="container" align="right" style="margin-top:10px;"><?php echo get_days_dropdown(); ?> </div>
