@@ -7,7 +7,7 @@ RewriteEngine on
 # be sure to set the RewriteBase to the same as $WEBROOT in index.php
 RewriteBase /honeydb/
 
-RewriteRule ^((sbin|data/)) - [R=404,L,NC]
+RewriteRule ^((etc|usr)) - [R=404,L,NC]
 RewriteRule ^logger/?$ index.php?c=logger
 RewriteRule ^geoip/(.+)/?$ index.php?c=geoip&i=$1
 RewriteRule ^whois-data/(.+)/(.+)/? index.php?c=whois-data&i=$1&h=$2
