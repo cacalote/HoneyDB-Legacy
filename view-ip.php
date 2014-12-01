@@ -1,10 +1,6 @@
 <?php
-$i = !isset($_GET['i']) ? $_GET['i'] = 'all' : trim($_GET['i']);
-
-if(false == filter_var($i, FILTER_VALIDATE_IP) && 'all' != $i) {
-	echo 'i:Error, meh!';
-	exit();
-}
+include 'bin/validate.ip.php';
+include 'bin/validate.days.php';
 
 if('all' == $i) {
 	echo '<div id="view">';
@@ -17,7 +13,7 @@ if('all' == $i) {
 // /////// start javascript ///////
 ?>
 <script language="javascript">
-document.getElementById("ip-all").innerHTML = getHosts('<?php echo $WEBROOT; ?>');
+document.getElementById("ip-all").innerHTML = getHosts('<?php echo $WEBROOT; ?>', '', <?php echo $days; ?>);
 
 $('#ip-all').children('div').click(function(event) {
         ip = $(event.target).text().split(' (');

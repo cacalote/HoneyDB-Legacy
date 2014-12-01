@@ -1,6 +1,6 @@
 /* honeydb.js */
 function getTopIp(days) {
-		days = typeof days !== 'undefined' ? days : 0;
+		days       = typeof days !== 'undefined' ? days : 0;
         html       = '';
         append_url = '';
 
@@ -40,63 +40,92 @@ function getBadHosts() {
         return html;
 }
 
-function getHosts(webRoot, service) {
-	webRoot = typeof webRoot !== 'undefined' ? webRoot : '/';
-	service = typeof service !== 'undefined' ? service : '';
+function getHosts(webRoot, service, days, date) {
+	webRoot    = typeof webRoot !== 'undefined' ? webRoot : '/';
+	service    = typeof service !== 'undefined' ? service : '';
+	days       = typeof days    !== 'undefined' ? days    : 0;
+	date       = typeof date    !== 'undefined' ? '/date/' + date   : '';
+	html       = '';
+	append_url = '';
 
-        html = '';
-        $.ajax({
-                async:    false,
-                dataType: 'json',
-                url:      webRoot + 'ip/all/' + service,
-                success:  function(data) {
-                        var i = 0;
-                        $.each(data, function() {
-                                i++;
-                                html += '<div id="ip-' + i + '">' + this['remote_host'] + ' (' + this['ip_count'] + ')</div>';
-                        });
-                }
-        });
-        return html;
+	if(days > 0) {
+		if(service.length) {
+			append_url += '/';
+		}
+		append_url += 'days/' + days;
+	}
+
+	$.ajax({
+		async:    false,
+		dataType: 'json',
+		url:      webRoot + 'ip/all/' + service + append_url,
+		success:  function(data) {
+			var i = 0;
+			$.each(data, function() {
+				i++;
+				html += '<div id="ip-' + i + '">' + this['remote_host'] + ' (' + this['ip_count'] + ')</div>';
+			});
+		}
+	});
+	return html;
 }
 
-function getServices(webRoot, ip) {
-	webRoot = typeof webRoot !== 'undefined' ? webRoot : '/';
-	ip      = typeof ip !== 'undefined' ? ip : '';
+function getServices(webRoot, ip, date, days) {
+	webRoot    = typeof webRoot !== 'undefined' ? webRoot : '/';
+	ip         = typeof ip      !== 'undefined' ? ip      : 'all';
+	date       = typeof date    !== 'undefined' ? date    : '';
+	days       = typeof days    !== 'undefined' ? days    : 0;
+	html       = '';
+	append_url = '';
+	
+	append_url += 'all/' + ip;
+	
+	if(days > 0) {
+		append_url += '/days/' + days;
+	}
 
-	html = '';
 	$.ajax({
-                async:    false,
-                dataType: 'json',
-                url:      webRoot + 'service/all/' + ip,
-                success:  function(data) {
-                        var i = 0;
-                        $.each(data, function() {
-                                i++;
-                                html += '<div id="service-' + i + '">' + this['service'] + ' (' + this['service_count'] + ')</div>';
-                        });
-                }
-        });
-        return html;
+		async:    false,
+		dataType: 'json',
+		url:      webRoot + 'service/' + append_url,
+		success:  function(data) {
+			var i = 0;
+			$.each(data, function() {
+					i++;
+					html += '<div id="service-' + i + '">' + this['service'] + ' (' + this['service_count'] + ')</div>';
+			});
+		}
+	});
+	return html;
 }
 
-function getDates(webRoot, date) {
-	webRoot = typeof webRoot !== 'undefined' ? webRoot : '/';
-        date    = typeof date !== 'undefined' ? date : '';
+function getDates(webRoot, date, days) {
+	webRoot = typeof webRoot !== 'undefined'  ? webRoot : '/';
+	date    = typeof date    !== 'undefined'  ? date    : '';
+	days    = typeof days    !== 'undefined'  ? days    : 0;
+	date    = date           !== '0000-00-00' ? date    : '';
+	html    = '';
 
-	html = '';
+	if(date.length) {
+		append_url = date;
+	} else {
+		append_url = 'all';
+	}
+	
+	append_url += '/days/' + days;
+
 	$.ajax({
-                async:    false,
-                dataType: 'json',
-                url:      webRoot + 'date/all/' + date,
-                success:  function(data) {
-                        var i = 0;
-                        $.each(data, function() {
-                                html += '<div id="date-' + i + '">' + this['date'] + ' (' + this['date_count'] + ')</div>';
-                                i++;
-                        });
-                }
-        });
+		async:    false,
+		dataType: 'json',
+		url:      webRoot + 'date/' + append_url,
+		success:  function(data) {
+			var i = 0;
+			$.each(data, function() {
+				html += '<div id="date-' + i + '">' + this['date'] + ' (' + this['date_count'] + ')</div>';
+				i++;
+			});
+		}
+	});
 	return html;
 }
 
@@ -123,9 +152,9 @@ function getPort(webRoot, service) {
 }
 
 function getEvents(webRoot, service, ip) {
-        webRoot = typeof webRoot !== 'undefined' ? webRoot : '/';
+	webRoot = typeof webRoot !== 'undefined' ? webRoot : '/';
 	service = typeof service !== 'undefined' ? service.replace(/\[/g, '').replace(/\]/g, '') : '';
-        ip      = typeof ip !== 'undefined' ? ip : '';
+	ip      = typeof ip !== 'undefined' ? ip : '';
 
 	html = '';
 
@@ -184,3 +213,4 @@ function getTopService(days) {
         });
         return html;
 }
+

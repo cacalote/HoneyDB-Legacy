@@ -15,7 +15,7 @@ function get_days_dropdown($default=10) {
 		array('365', '1 Year')
 		);
 
-	$html .= '<form action="" id="filter" method="post">filter';
+	$html .= '<form action="" id="filter" method="post">';
 	$html .= '<select name="days" id="days" onchange="form = document.getElementById(\'filter\'); form.submit();">';
 	foreach($array as $r) {
 		if($r[0] == $default) { $selected = 'selected'; } else { $selected = ''; }

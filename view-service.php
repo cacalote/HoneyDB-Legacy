@@ -1,9 +1,17 @@
 <?php
-$s = !isset($_GET['s']) ? $_GET['s'] = 'all' : trim($_GET['s']);
+include 'bin/validate.service.php';
+include 'bin/validate.view.php';
+include 'bin/validate.ip.php';
+include 'bin/validate.days.php';
 
 if('all' == $s) {
+	$filter_text = '';
+	if(isset($_GET['d'])) {
+		$filter_text = 'for ' . $_GET['d'];
+	}
+	
 	echo '<div id="view">';
-	echo '<div style="font-size:18px;">All Services</div>';
+	echo '<div style="font-size:18px;">All Services ' . $filter_text . '</div>';
 	echo '<table style="margin-left:25px;"><tr>';
 	echo '<td><div id="service-all"></div></td>';
 	echo '</tr></table>';
@@ -12,7 +20,7 @@ if('all' == $s) {
 // /////// start javascript ///////
 ?>
 <script language="javascript">
-document.getElementById("service-all").innerHTML = getServices('<?php echo $WEBROOT; ?>');
+document.getElementById("service-all").innerHTML = getServices('<?php echo $WEBROOT; ?>', '<?php echo $i; ?>', '', <?php echo $days;?>);
 
 $('#service-all').children('div').click(function(event) {
         service = $(event.target).text().split(' (');
@@ -22,7 +30,7 @@ $('#service-all').children('div').click(function(event) {
 </script>
 <?php
 // /////// end javascript ///////
-
+	
 } else {
 	echo '<div id="view">';
 	echo '<div id="view-title">Analysis for ' . $s . '</div>';
@@ -48,11 +56,11 @@ $('#service-all').children('div').click(function(event) {
 // /////// start javascript ///////
 ?> 
 <script language="javascript">
-document.getElementById("hosts").innerHTML = getHosts('<?php echo $WEBROOT; ?>', '<?php echo $s; ?>');
+document.getElementById("hosts").innerHTML = getHosts('<?php echo $WEBROOT; ?>', '<?php echo $s; ?>', <?php echo $days; ?>);
 document.getElementById("view-title").innerHTML = document.getElementById("view-title").innerHTML + ' ' + getPort('<?php echo $WEBROOT; ?>', '<?php echo $s; ?>');
 
 $('#hosts').children('div').click(function(event) {
-        ip = $(event.target).text().split(' (');
+	ip = $(event.target).text().split(' (');
 	document.getElementById('request-data').innerHTML = 'Select a RX event';
 	document.getElementById('ip-info').innerHTML = ip[0];
 	document.getElementById('tools').style.display = '';
