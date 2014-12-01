@@ -1,20 +1,17 @@
 <?php
-$s = !isset($_GET['s']) ? $_GET['s'] = 'all' : trim($_GET['s']);
-$i = !isset($_GET['i']) ? $_GET['i'] = '' : trim($_GET['i']);
-
-if(false == filter_var($i, FILTER_VALIDATE_IP) && '' != $i) {
-	echo 'i:Error, meh!';
-	exit();
-}
+include 'validate.service.php';
+include 'validate.ip.php';
+include 'validate.days.php';
 
 $paramArray = array();
 
 if('all' != $s) {
 	$where = '';
+	
 	if(filter_var($i, FILTER_VALIDATE_IP)) {
 		$where = " AND remote_host=? ";
 	}
-
+	
 	array_push($paramArray, $s, $i);
 
 	$sql = "SELECT service, COUNT(service) AS service_count FROM honeypy WHERE service=?" . $where . "GROUP BY service ORDER BY service_count DESC;";
@@ -31,14 +28,34 @@ if('all' != $s) {
 	echo json_encode($serviceArray);
 
 } else {
-	$where = '';
-        if(filter_var($i, FILTER_VALIDATE_IP)) {
-		$where = " WHERE remote_host=? ";
+	$where       = '';
+	$where_count = 0;
 
+	if(filter_var($i, FILTER_VALIDATE_IP)) {
+		if(0 == $where_count) {
+			$where .= " WHERE";
+			$where_count++;
+		} else {
+			$where .= " AND";
+		}
+		
+		$where .= " remote_host=? ";
 		array_push($paramArray, $i);
-        }
+	}
 
-	$rs = $db->Execute("SELECT service, COUNT(service) AS service_count FROM honeypy $where GROUP BY service ORDER BY service_count DESC;", $paramArray);
+	if($days > 0) {
+		if(0 == $where_count) {
+			$where .= " WHERE";
+			$where_count++;
+		} else {
+			$where .= " AND";
+		}
+
+		$where .= " date >= (CURDATE() - INTERVAL ? DAY) ";
+		array_push($paramArray, $days);
+	}
+
+	$rs = $db->Execute("SELECT service, COUNT(service) AS service_count FROM honeypy " . $where . " GROUP BY service ORDER BY service_count DESC;", $paramArray);
 
 	$serviceArray = array();
 

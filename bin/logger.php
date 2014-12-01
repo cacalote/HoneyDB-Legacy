@@ -27,7 +27,7 @@ if('yes' == strtolower($LOGGER_ENABLE)) {
 			$authenticated = true;
 		} else {
 			// let there be fail
-			$result['status'] = 'Invalid Key';
+			$result['status'] = 'Invalid Key: "' . $_POST['s'] . '"';
 			response($result);
 			exit();
 		}

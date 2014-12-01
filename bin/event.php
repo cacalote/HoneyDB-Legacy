@@ -1,11 +1,6 @@
 <?php
-$s = !isset($_GET['s']) ? $_GET['s'] = '' : trim($_GET['s']);
-$i = !isset($_GET['i']) ? $_GET['i'] = '' : trim($_GET['i']);
-
-if(false == filter_var($i, FILTER_VALIDATE_IP) && '' != $i) {
-	echo 'i:Error, meh!';
-	exit();
-}
+include 'validate.services.php';
+include 'validate.ip.php';
 
 $where = '';
 $paramArray = array();
