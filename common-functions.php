@@ -7,6 +7,7 @@ function get_days_dropdown($default=10) {
 	}
 
 	$array = array(
+		array('1', '1 Day'),
 		array('7', '7 Days'),
 		array('10', '10 Days'),
 		array('30', '30 Days'),
