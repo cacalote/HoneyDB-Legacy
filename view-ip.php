@@ -4,40 +4,76 @@ include 'bin/validate.days.php';
 
 if('all' == $i) {
 	echo '<div id="view">';
-	echo '<div style="font-size:18px;">All Hosts</div>';
-	echo '<table style="margin-left:25px;"><tr>';
-	echo '<td><div id="ip-all"></div></td>';
+	echo '<table style="width:800px;" align="center"><tr>';
+	echo '<td colspan="2"><div style="font-size:18px;">All Hosts</div></td></tr><tr>';
+	echo '<td valign="top" width="50%"><div id="ip-all"></div></td>';
+	echo '<td valign="top"><div id="ip-all-chart"></div></td>';
 	echo '</tr></table>';
 	echo '</div>';
 
-// /////// start javascript ///////
-?>
-<script language="javascript">
-document.getElementById("ip-all").innerHTML = getHosts('<?php echo $WEBROOT; ?>', '', <?php echo $days; ?>);
+	// /////// start javascript ///////
+	?>
+	<script language="javascript">
+	document.getElementById("ip-all").innerHTML = getHosts('<?php echo $WEBROOT; ?>', '', <?php echo $days; ?>);
 
-$('#ip-all').children('div').click(function(event) {
-        ip = $(event.target).text().split(' (');
-        url = '<?php echo $WEBROOT; ?>view-ip/' + ip[0];
-        location.href = url;
-});
-/*
-$('#ip-all').children('div').each(function(i) {
-        i++;
-        ip = $(this).text().split('(');
-        $.ajax({
-                async:    false,
-                dataType: 'json',
-                url:      '<?php echo $WEBROOT; ?>geoip/' + ip[0],
-                success:  function(data) {
-                        html = '<div style="font-size:small;"><img src="https://foospidy.com/opt/honeydb/img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName'] + '</div>';
-                        $('#ip-' + i).append(html);
-                }
-        });
-});
-*/
-</script>
-<?php
-// /////// end javascript ///////
+	$('#ip-all').children('div').click(function(event) {
+			ip = $(event.target).text().split(' (');
+			url = '<?php echo $WEBROOT; ?>view-ip/' + ip[0];
+			location.href = url;
+	});
+
+
+	// top ip chart
+	var pie_data = [];
+
+	$.ajax({
+		async:    false,
+		dataType: 'json',
+		url:      'top-ip/days/<?php echo $days; ?>',
+		success:  function(data) {
+			$.each(data, function() {
+				ip = [];
+				ip.push(this['remote_host'].toString());
+				ip.push(parseInt(this['ip_count']));
+				pie_data.push(ip);
+			});
+		}
+	});
+
+	var plot2 = jQuery.jqplot ('ip-all-chart', [pie_data], {
+		title: 'Top 10',
+		seriesDefaults: {
+			// Make this a pie chart.
+			renderer: jQuery.jqplot.PieRenderer,
+			shadow: true,
+			rendererOptions: {
+			  // Put data labels on the pie slices.
+			  // By default, labels show the percentage of the slice.
+			  showDataLabels: true
+			}
+		}, 
+		legend: { show: true, location: 'w' },
+		grid: {borderColor: 'white', shadow: false, drawBorder: true}
+	});
+
+	/*
+	$('#ip-all').children('div').each(function(i) {
+			i++;
+			ip = $(this).text().split('(');
+			$.ajax({
+					async:    false,
+					dataType: 'json',
+					url:      '<?php echo $WEBROOT; ?>geoip/' + ip[0],
+					success:  function(data) {
+							html = '<div style="font-size:small;"><img src="https://foospidy.com/opt/honeydb/img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName'] + '</div>';
+							$('#ip-' + i).append(html);
+					}
+			});
+	});
+	*/
+	</script>
+	<?php
+	// /////// end javascript ///////
 
 } else {
 	echo '<div id="view">';
@@ -85,12 +121,6 @@ $('#services').children('div').click(function(event) {
 $("#projecthoneypot").load('<?php echo $WEBROOT; ?>projecthoneypot/<?php echo $i; ?>');
 $("#shodan").load('<?php echo $WEBROOT; ?>shodan/<?php echo $i; ?>');
 
-/*
-$('#whois').click(function(event) {
-	event.preventDefault();
-	window.open('https://who.is/whois-ip/ip-address/<?php echo $i; ?>', 'whois', 'width=800,height=600,toolbar=no,scrollbars=yes');
-});
-*/
 
 $('#dshield').click(function(event) {
         event.preventDefault();
