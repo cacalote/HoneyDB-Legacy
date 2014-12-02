@@ -11,25 +11,59 @@ if('all' == $s) {
 	}
 	
 	echo '<div id="view">';
-	echo '<div style="font-size:18px;">All Services ' . $filter_text . '</div>';
-	echo '<table style="margin-left:25px;"><tr>';
-	echo '<td><div id="service-all"></div></td>';
+	echo '<table style="width:800px;" align="center"><tr>';
+	echo '<td colspan="2"><div style="font-size:18px;">All Services</div></td></tr><tr>';
+	echo '<td valign="top" width="50%"><div id="service-all"></div></td>';
+	echo '<td valign="top"><div id="service-all-chart"></div></td>';
 	echo '</tr></table>';
 	echo '</div>';
 
-// /////// start javascript ///////
-?>
-<script language="javascript">
-document.getElementById("service-all").innerHTML = getServices('<?php echo $WEBROOT; ?>', '<?php echo $i; ?>', '', <?php echo $days;?>);
+	// /////// start javascript ///////
+	?>
+	<script language="javascript">
+	document.getElementById("service-all").innerHTML = getServices('<?php echo $WEBROOT; ?>', '<?php echo $i; ?>', '', <?php echo $days;?>);
 
-$('#service-all').children('div').click(function(event) {
-        service = $(event.target).text().split(' (');
-        url = '<?php echo $WEBROOT; ?>view-service/' + service[0].replace(/\[/g, '').replace(/\]/g, '');
-        location.href = url;
-});
-</script>
-<?php
-// /////// end javascript ///////
+	$('#service-all').children('div').click(function(event) {
+			service = $(event.target).text().split(' (');
+			url = '<?php echo $WEBROOT; ?>view-service/' + service[0].replace(/\[/g, '').replace(/\]/g, '');
+			location.href = url;
+	});
+
+	// top service chart
+	var pie_data = [];
+
+	$.ajax({
+		async:    false,
+		dataType: 'json',
+		url:      'top-service/days/<?php echo $days; ?>',
+		success:  function(data) {
+			$.each(data, function() {
+				ip = [];
+				ip.push(this['service'].toString());
+				ip.push(parseInt(this['service_count']));
+				pie_data.push(ip);
+			});
+		}
+	});
+
+	var plot2 = jQuery.jqplot ('service-all-chart', [pie_data], {
+		title: 'Top 10',
+		seriesDefaults: {
+			// Make this a pie chart.
+			renderer: jQuery.jqplot.PieRenderer,
+			shadow: true,
+			rendererOptions: {
+			  // Put data labels on the pie slices.
+			  // By default, labels show the percentage of the slice.
+			  showDataLabels: true
+			}
+		}, 
+		legend: { show: true, location: 'w' },
+		grid: {borderColor: 'white', shadow: false, drawBorder: true}
+	});
+	</script>
+	<?php
+	// /////// end javascript ///////
 	
 } else {
 	echo '<div id="view">';
