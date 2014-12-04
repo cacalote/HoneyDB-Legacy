@@ -15,7 +15,7 @@ Getting started:
 4. Create database. Suggested database name is "honeydb" but you can name whatever you like. Once you've created your database use the create.sql script to create the database table. Example command line:
 mysql -u <db username> -p <db name> < create.sql
 
-5. Configure HoneyDB by editing the constants section of the index.php file:
+5. Configure HoneyDB by editing the constants section of the `etc/configuration.php` file:
 ```php
 // constants
 $WEBROOT        = ''; // the root path for the web site starting at "/"
@@ -34,4 +34,4 @@ $DB_PASS        = ''; // the password for the database user.
 
 Getting log data:
 
-There are two methods of getting log data from HoneyPy. First you can enable the `[honeypysqlout]` option in the `honeypy.cfg` file (https://github.com/foospidy/HoneyPy/blob/master/etc/honeypy.cfg).
+There are two methods of getting log data from HoneyPy. First you can enable the `[honeypysql]` option in the `honeypy.cfg` file (https://github.com/foospidy/HoneyPy/blob/master/etc/honeypy.cfg). This option generates `.sql` files that can then be used to import the data directly into the database. Second, you can enable the `[honeydb]` option in the `honeypy.cfg` file. The `url` parameter should be pointed at: `https://<your server>/honeydb/logger`. And the secret parameter should be a long random value to mitigate unauthorized posts, or attacks, against HoneyDB.
