@@ -34,4 +34,4 @@ $DB_PASS        = ''; // the password for the database user.
 
 Getting log data:
 
-todo :)
+There are two methods of getting log data from HoneyPy. First you can enable the `[honeypysqlout]` option in the `honeypy.cfg` file (https://github.com/foospidy/HoneyPy/blob/master/etc/honeypy.cfg).
