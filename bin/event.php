@@ -21,7 +21,7 @@ if($s != '' || $i != '') {
 	// else don't do nada
 }
 
-$rs = $db->Execute("SELECT date_time, event, data FROM honeypy $where ORDER BY date_time ASC;", $paramArray);
+$rs = $db->Execute("SELECT date_time, event, data, bytes FROM honeypy $where ORDER BY date_time ASC;", $paramArray);
 
 $eventArray = array();
 
