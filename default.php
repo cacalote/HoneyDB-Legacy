@@ -94,7 +94,7 @@ $(document).ready(function() {
 				pad: 1.05,
 				tickOptions: {formatString: '%d'},
 				min:0,
-				max:1000
+				max:2000
 			}
 		},
 		grid: {borderColor: 'white', shadow: false, drawBorder: true}
