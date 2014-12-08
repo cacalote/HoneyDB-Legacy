@@ -86,7 +86,7 @@ if('all' == $i) {
 		echo '<div id="tools">Tools: <button id="dshield">dshield</button> <button id="firyx">firyx</button> <button id="twitter">twitter</button> <button id="google">google</button> <button id="virustotal">virus total</button></div><br>';
 		echo '<div id="service-info">&nbsp;</div>';
 		echo '<div>Request Data</div>';
-		echo '<textarea cols="100" rows="7" id="request-data">Select a RX event.</textarea>';
+		echo '<textarea cols="100" rows="7" id="request-data">Select TX or RX events.</textarea>';
 		echo '<br><br>';
 		echo 'Project HoneyPot';
 		echo '<pre id="projecthoneypot" style="width:100%;"></pre>';
