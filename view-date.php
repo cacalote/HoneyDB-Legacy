@@ -50,7 +50,7 @@ switch($v) {
 			echo '<div id="tools">Tools: <button id="php">php</button> <button id="dshield">dshield</button> <button id="firyx">firyx</button></div><br>';
 			echo '<div id="date-info">&nbsp;</div>';
 			echo '<div>Request Data</div>';
-			echo '<textarea cols="100" rows="7" id="request-data">Select a RX event.</textarea>';
+			echo '<textarea cols="100" rows="7" id="request-data">Select TX or RX events.</textarea>';
 			echo '<br><br>';
 			//echo 'Host Ports and  Banners';
 			//echo '<textarea cols="100" rows="7" id="shodan"></textarea>';
