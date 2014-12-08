@@ -154,32 +154,33 @@ function getPort(webRoot, service) {
 function getEvents(webRoot, service, ip) {
 	webRoot = typeof webRoot !== 'undefined' ? webRoot : '/';
 	service = typeof service !== 'undefined' ? service.replace(/\[/g, '').replace(/\]/g, '') : '';
-	ip      = typeof ip !== 'undefined' ? ip : '';
+	ip      = typeof ip      !== 'undefined' ? ip : '';
 
 	html = '';
 
 	if(!service.length) { alert('s:Error, meh!'); return html; }
 	if(!service.length) { alert('i:Error, meh!'); return html; }
 
-        $.ajax({
-                async:    false,
-                dataType: 'json',
-                url:      webRoot + 'event/service/' + service + '/ip/' + ip,
-                success:  function(data) {
-                        var i = 0;
-                        $.each(data, function() {
-                                i++;
-                                html += '<div id="event-' + i + '" onclick="loadEventData(\'' + webRoot + '\', \'request-data\', \'' + this['data'] + '\');">' + this['date_time'] + ' '  + this['event'] + '</div>';
-                        });
-                }
-        });
-        return html;
+	$.ajax({
+			async:    false,
+			dataType: 'json',
+			url:      webRoot + 'event/service/' + service + '/ip/' + ip,
+			success:  function(data) {
+					var i = 0;
+					$.each(data, function() {
+							i++;
+							bytes = null !== this['bytes'] ? this['bytes'] : '';
+							html += '<div id="event-' + i + '" onclick="loadEventData(\'' + webRoot + '\', \'request-data\', \'' + this['data'] + '\');">' + this['date_time'] + ' '  + this['event'] + ' '  + bytes + '</div>';
+					});
+			}
+	});
+	return html;
 }
 
 function loadEventData(webRoot, id, data) {
 	webRoot = typeof webRoot !== 'undefined' ? webRoot : '/';
-	id      = typeof id !== 'undefined' ? id : '';
-        data    = typeof data !== 'undefined' ? data : '';
+	id      = typeof id      !== 'undefined' ? id : '';
+	data    = typeof data    !== 'undefined' ? data : 'null';
 
 	if('null' != data) {
 		$("#" + id).load(webRoot + 'event-data/' + data);
