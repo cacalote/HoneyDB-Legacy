@@ -94,7 +94,7 @@ $(document).ready(function() {
 				pad: 1.05,
 				tickOptions: {formatString: '%d'},
 				min:0,
-				max:2000
+				max:<?php echo $CHART_DAILY_Y_MAX; ?>
 			}
 		},
 		grid: {borderColor: 'white', shadow: false, drawBorder: true}
