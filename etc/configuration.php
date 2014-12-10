@@ -11,5 +11,7 @@ $DB_NAME        = '';
 $DB_USER        = '';
 $DB_PASS        = '';
 $DEFAULT_DAYS   = 10;
+
+$CHART_DAILY_Y_MAX  = 5000;
 ?>
 
