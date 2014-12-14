@@ -56,6 +56,8 @@ if('all' != $s) {
 
 		$where .= " date=?";
 		array_push($paramArray, $date);
+		
+		$days = 0; // cancel out days filter
 	}
 
 	// if days are specified
