@@ -9,16 +9,16 @@ function getTopIp(days) {
 	}
 
 	$.ajax({
-			async:    false,
-			dataType: 'json',
-			url:      'top-ip' + append_url,
-			success:  function(data) {
-					var i = 0;
-					$.each(data, function() {
-							html += '<div id="top-ip-' + i + '">' + this['remote_host'] + ' (' + this['ip_count'] + ')</div>';
-							i++;
-					});
-			}
+		async:    false,
+		dataType: 'json',
+		url:      'top-ip' + append_url,
+		success:  function(data) {
+				var i = 0;
+				$.each(data, function() {
+						html += '<div id="top-ip-' + i + '">' + this['remote_host'] + ' (' + this['ip_count'] + ')</div>';
+						i++;
+				});
+		}
 	});
 	return html;
 }
