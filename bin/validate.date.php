@@ -1,8 +1,10 @@
 <?php
-$d = !isset($_GET['d']) ? '0000-00-00' : trim($_GET['d']);
+$date = !isset($_GET['date']) ? 'all' : trim($_GET['date']);
 
-if(false == filter_var($d, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[\d-]{1,10}$/')))) {
-	echo 'date:Error, meh!';
-	exit();
+if('all' != $date) {
+	if(false == filter_var($date, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[\d-]{1,10}$/')))) {
+		echo 'date:Error, meh!';
+		exit();
+	}
 }
 ?>
