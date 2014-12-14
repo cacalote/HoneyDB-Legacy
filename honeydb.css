@@ -24,6 +24,10 @@
 	cursor:pointer;
 }
 
+#date-all {
+	cursor:pointer;
+}
+
 #hosts {
 	cursor:pointer;
 	width:150px;
