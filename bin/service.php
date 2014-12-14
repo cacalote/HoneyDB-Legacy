@@ -1,6 +1,7 @@
 <?php
 include 'validate.service.php';
 include 'validate.ip.php';
+include 'validate.date.php';
 include 'validate.days.php';
 
 $paramArray = array();
@@ -31,6 +32,7 @@ if('all' != $s) {
 	$where       = '';
 	$where_count = 0;
 
+	// if a ip is specified
 	if(filter_var($i, FILTER_VALIDATE_IP)) {
 		if(0 == $where_count) {
 			$where .= " WHERE";
@@ -42,7 +44,21 @@ if('all' != $s) {
 		$where .= " remote_host=? ";
 		array_push($paramArray, $i);
 	}
+	
+	// if a date is specified
+	if('all' != $date) {
+		if(0 == $where_count) {
+			$where .= " WHERE";
+			$where_count++;
+		} else {
+			$where .= " AND";
+		}
 
+		$where .= " date=?";
+		array_push($paramArray, $date);
+	}
+
+	// if days are specified
 	if($days > 0) {
 		if(0 == $where_count) {
 			$where .= " WHERE";
