@@ -1,46 +1,52 @@
 <?php
+include 'bin/validate.service.php';
+include 'bin/validate.view.php';
 include 'bin/validate.ip.php';
 include 'bin/validate.days.php';
 
-if('all' == $i) {
+if('all' == $s) {
+	$filter_text = '';
+	if(isset($_GET['d'])) {
+		$filter_text = 'for ' . $_GET['d'];
+	}
+	
 	echo '<div id="view">';
 	echo '<table style="width:800px;" align="center"><tr>';
-	echo '<td colspan="2"><div style="font-size:18px;">All Hosts</div></td></tr><tr>';
-	echo '<td valign="top" width="50%"><div id="ip-all"></div></td>';
-	echo '<td valign="top"><div id="ip-all-chart"></div></td>';
+	echo '<td colspan="2"><div style="font-size:18px;">All Services</div></td></tr><tr>';
+	echo '<td valign="top" width="50%"><div id="service-all"></div></td>';
+	echo '<td valign="top"><div id="service-all-chart"></div></td>';
 	echo '</tr></table>';
 	echo '</div>';
 
 	// /////// start javascript ///////
 	?>
 	<script language="javascript">
-	document.getElementById("ip-all").innerHTML = getHosts('<?php echo $WEBROOT; ?>', '', <?php echo $days; ?>);
+	document.getElementById("service-all").innerHTML = getServices('<?php echo $WEBROOT; ?>', '<?php echo $i; ?>', '', <?php echo $days;?>);
 
-	$('#ip-all').children('div').click(function(event) {
-			ip = $(event.target).text().split(' (');
-			url = '<?php echo $WEBROOT; ?>view-ip/' + ip[0];
+	$('#service-all').children('div').click(function(event) {
+			service = $(event.target).text().split(' (');
+			url = '<?php echo $WEBROOT; ?>view-service/' + service[0].replace(/\[/g, '').replace(/\]/g, '');
 			location.href = url;
 	});
 
-
-	// top ip chart
+	// top service chart
 	var pie_data = [];
 
 	$.ajax({
 		async:    false,
 		dataType: 'json',
-		url:      'top-ip/days/<?php echo $days; ?>',
+		url:      'top-service/days/<?php echo $days; ?>',
 		success:  function(data) {
 			$.each(data, function() {
 				ip = [];
-				ip.push(this['remote_host'].toString());
-				ip.push(parseInt(this['ip_count']));
+				ip.push(this['service'].toString());
+				ip.push(parseInt(this['service_count']));
 				pie_data.push(ip);
 			});
 		}
 	});
 
-	var plot2 = jQuery.jqplot ('ip-all-chart', [pie_data], {
+	var plot2 = jQuery.jqplot ('service-all-chart', [pie_data], {
 		title: 'Top 10',
 		seriesDefaults: {
 			// Make this a pie chart.
@@ -55,36 +61,19 @@ if('all' == $i) {
 		legend: { show: true, location: 'w' },
 		grid: {borderColor: 'white', shadow: false, drawBorder: true}
 	});
-
-	/*
-	$('#ip-all').children('div').each(function(i) {
-			i++;
-			ip = $(this).text().split('(');
-			$.ajax({
-					async:    false,
-					dataType: 'json',
-					url:      '<?php echo $WEBROOT; ?>geoip/' + ip[0],
-					success:  function(data) {
-							html = '<div style="font-size:small;"><img src="https://foospidy.com/opt/honeydb/img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName'] + '</div>';
-							$('#ip-' + i).append(html);
-					}
-			});
-	});
-	*/
 	</script>
 	<?php
 	// /////// end javascript ///////
 
 } else {
 	echo '<div id="view">';
-	echo '<div id="view-title">Analysis for ' . $i . '</div>';
-	echo '<div id="country"></div>';
-	echo '<table width="90%"><tr><td>Services</td><td>Events</td><td></td></tr><tr>';
-	echo '<td valign="top"><div id="services"></div></td>';
+	echo '<div id="view-title">Analysis for ' . $s . '</div>';
+	echo '<table width="90%"><tr><td>Hosts</td><td>Events</td><td></td></tr><tr>';
+	echo '<td valign="top"><div id="hosts"></div></td>';
 	echo '<td valign="top"><div id="events"></div></td>';
 	echo '<td valign="top">';
-		echo '<div id="tools">Tools: <button id="dshield">dshield</button> <button id="firyx">firyx</button> <button id="twitter">twitter</button> <button id="google">google</button> <button id="virustotal">virus total</button></div><br>';
-		echo '<div id="service-info">&nbsp;</div>';
+		echo '<div id="tools" style="display:none;">Tools: <button id="php">php</button> <button id="dshield">dshield</button> <button id="firyx">firyx</button> <button id="twitter">twitter</button> <button id="google">google</button> <button id="virustotal">virus total</button></div><br>';
+		echo '<div id="ip-info">&nbsp;</div>';
 		echo '<div>Request Data</div>';
 		echo '<textarea cols="100" rows="7" id="request-data">Select a RX event.</textarea>';
 		echo '<br><br>';
@@ -92,59 +81,51 @@ if('all' == $i) {
 		echo '<pre id="projecthoneypot" style="width:100%;"></pre>';
 		echo '<br><br>';
 		echo 'Shodan';
-		echo '<pre id="shodan" style="width:100%;"></pre>';
+		echo '<pre id="shodan" style="width:100%;">Select a host.</pre>';
 		echo '<br><br>';
 	echo '</td>';
 	echo '</tr></table>';
 	echo '</div>';
 
 // /////// start javascript ///////
-?>
+?> 
 <script language="javascript">
-$.ajax({
-	async:    false,
-	dataType: 'json',
-	url:      '<?php echo $WEBROOT; ?>geoip/<?php echo $i; ?>',
-	success:  function(data) {
-		$('#country').append('<img src="<?php echo $WEBROOT; ?>img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName']);
-	}
+document.getElementById("hosts").innerHTML = getHosts('<?php echo $WEBROOT; ?>', '<?php echo $s; ?>', <?php echo $days; ?>);
+document.getElementById("view-title").innerHTML = document.getElementById("view-title").innerHTML + ' ' + getPort('<?php echo $WEBROOT; ?>', '<?php echo $s; ?>');
+
+$('#hosts').children('div').click(function(event) {
+	ip = $(event.target).text().split(' (');
+	document.getElementById('request-data').innerHTML = 'Select a RX event';
+	document.getElementById('ip-info').innerHTML = ip[0];
+	document.getElementById('tools').style.display = '';
+	document.getElementById('events').innerHTML = getEvents('<?php echo $WEBROOT; ?>', '<?php echo $s; ?>', ip[0]);
+	$("#projecthoneypot").load('<?php echo $WEBROOT; ?>projecthoneypot/' + ip[0]);
+	$("#shodan").load('<?php echo $WEBROOT; ?>shodan/' + ip[0]);
 });
-
-document.getElementById("services").innerHTML = getServices('<?php echo $WEBROOT; ?>', '<?php echo $i; ?>');
-
-$('#services').children('div').click(function(event) {
-        service = $(event.target).text().split(' (');
-	document.getElementById('service-info').innerHTML = service[0];
-	document.getElementById('events').innerHTML = getEvents('<?php echo $WEBROOT; ?>', service[0], '<?php echo $i; ?>');
-});
-
-$("#projecthoneypot").load('<?php echo $WEBROOT; ?>projecthoneypot/<?php echo $i; ?>');
-$("#shodan").load('<?php echo $WEBROOT; ?>shodan/<?php echo $i; ?>');
-
 
 $('#dshield').click(function(event) {
         event.preventDefault();
-        window.open('https://www.dshield.org/ipinfo.html?ip=<?php echo $i; ?>', 'dshield-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
+        window.open('https://www.dshield.org/ipinfo.html?ip=' + document.getElementById('ip-info').innerHTML, 'dshield-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
 });
 
 $('#firyx').click(function(event) {
         event.preventDefault();
-        window.open('https://www.firyx.com/whois?ip=<?php echo $i; ?>', 'firyx-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
+        window.open('https://www.firyx.com/whois?ip=' + document.getElementById('ip-info').innerHTML, 'firyx-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
 });
 
 $('#twitter').click(function(event) {
         event.preventDefault();
-        window.open('https://twitter.com/search?f=realtime&q=<?php echo $i; ?>&src=typd', 'twitter-ip-info', 'width=1200,height=600,toolbar=no,scrollbars=yes');
+        window.open('https://twitter.com/search?f=realtime&q=' + document.getElementById('ip-info').innerHTML + '&src=typd', 'twitter-ip-info', 'width=1200,height=600,toolbar=no,scrollbars=yes');
 });
 
 $('#google').click(function(event) {
         event.preventDefault();
-        window.open('https://www.google.com/#q=<?php echo $i; ?>&src=typd', 'google-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
+        window.open('https://www.google.com/#q=' + document.getElementById('ip-info').innerHTML + '&src=typd', 'google-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
 });
 
 $('#virustotal').click(function(event) {
         event.preventDefault();
-        window.open('https://www.virustotal.com/en/ip-address/<?php echo $i; ?>/information/', 'virustotal-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
+        window.open('https://www.virustotal.com/en/ip-address/' + document.getElementById('ip-info').innerHTML + '/information/', 'virustotal-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
 });
 </script>
 <?php   
