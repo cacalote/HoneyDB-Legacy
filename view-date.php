@@ -34,6 +34,8 @@ switch($v) {
 			echo '<div>Request Data</div>';
 			echo '<textarea cols="100" rows="7" id="request-data">Select a RX event.</textarea>';
 			echo '<br><br>';
+			echo '<pre id="request-data-hex"></pre>';
+			echo '<br><br>';
 			//echo 'Host Ports and  Banners';
 			//echo '<textarea cols="100" rows="7" id="shodan"></textarea>';
 			echo '<pre id="shodan" style="width:100%;"></pre>';
@@ -50,6 +52,8 @@ switch($v) {
 			echo '<div id="service-info">&nbsp;</div>';
 			echo '<div>Request Data</div>';
 			echo '<textarea cols="100" rows="7" id="request-data">Select a RX event.</textarea>';
+			echo '<br><br>';
+			echo '<pre id="request-data-hex"></pre>';
 			echo '<br><br>';
 			//echo 'Host Ports and  Banners';
 			//echo '<textarea cols="100" rows="7" id="shodan"></textarea>';
