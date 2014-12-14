@@ -1,43 +1,50 @@
 /* honeydb.js */
 function getTopIp(days) {
-		days       = typeof days !== 'undefined' ? days : 0;
-        html       = '';
-        append_url = '';
+	days       = typeof days !== 'undefined' ? days : 0;
+	html       = '';
+	append_url = '';
 
-        if(days>0) {
-        	append_url = '/days/' + days;
-        }
+	if(days>0) {
+		append_url = '/days/' + days;
+	}
 
-        $.ajax({
-                async:    false,
-                dataType: 'json',
-                url:      'top-ip' + append_url,
-                success:  function(data) {
-                        var i = 0;
-                        $.each(data, function() {
-                                html += '<div id="top-ip-' + i + '">' + this['remote_host'] + ' (' + this['ip_count'] + ')</div>';
-                                i++;
-                        });
-                }
-        });
-        return html;
+	$.ajax({
+			async:    false,
+			dataType: 'json',
+			url:      'top-ip' + append_url,
+			success:  function(data) {
+					var i = 0;
+					$.each(data, function() {
+							html += '<div id="top-ip-' + i + '">' + this['remote_host'] + ' (' + this['ip_count'] + ')</div>';
+							i++;
+					});
+			}
+	});
+	return html;
 }
 
-function getBadHosts() {
+function getTopService(days) {
+	days = typeof days !== 'undefined' ? days : 0;
 	html = '';
-        $.ajax({
-                async:    false,
-                dataType: 'json',
-                url:      'bad-hosts',
-                success:  function(data) {
-                        var i = 0;
-                        $.each(data, function() {
-                                i++;
-                                html += '<div id="bad-ip-' + i + '">' + this['remote_host'] + ' (' + this['ip_count'] + ')</div>';
-                        });
-                }
-        });
-        return html;
+	append_url = '';
+
+	if(days>0) {
+		append_url = '/days/' + days;
+	}
+
+	$.ajax({
+		async:    false,
+		dataType: 'json',
+		url:      'top-service' + append_url,
+		success:  function(data) {
+			var i = 0;
+			$.each(data, function() {
+				i++;
+				html += '<div id="top-service-' + i + '">' + this['service'] + ' (' + this['service_count'] + ')</div>';
+			});
+		}
+	});
+	return html;
 }
 
 function getHosts(webRoot, service, days, date) {
@@ -70,6 +77,26 @@ function getHosts(webRoot, service, days, date) {
 	return html;
 }
 
+function getHostsByDate(webRoot, date) {
+	webRoot = typeof webRoot !== 'undefined' ? webRoot : '/';
+	date    = typeof date    !== 'undefined' ? date    : 'all';
+	html    = '';
+   
+	$.ajax({
+		async:    false,
+		dataType: 'json',
+		url:      webRoot + 'ip/all/date/' + date,
+		success:  function(data) {
+			var i = 0;
+			$.each(data, function() {
+				i++;
+				html += '<div id="ip-' + i + '">' + this['remote_host'] + ' (' + this['ip_count'] + ')</div>';
+			});
+		}
+	});
+	return html;
+}
+
 function getServices(webRoot, ip, date, days) {
 	webRoot    = typeof webRoot !== 'undefined' ? webRoot : '/';
 	ip         = typeof ip      !== 'undefined' ? ip      : 'all';
@@ -88,6 +115,26 @@ function getServices(webRoot, ip, date, days) {
 		async:    false,
 		dataType: 'json',
 		url:      webRoot + 'service/' + append_url,
+		success:  function(data) {
+			var i = 0;
+			$.each(data, function() {
+					i++;
+					html += '<div id="service-' + i + '">' + this['service'] + ' (' + this['service_count'] + ')</div>';
+			});
+		}
+	});
+	return html;
+}
+
+function getServicesByDate(webRoot, date) {
+	webRoot = typeof webRoot !== 'undefined' ? webRoot : '/';
+	date    = typeof date    !== 'undefined' ? date    : 'all';
+	html    = '';
+	
+	$.ajax({
+		async:    false,
+		dataType: 'json',
+		url:      webRoot + 'service/all/date/' + date,
 		success:  function(data) {
 			var i = 0;
 			$.each(data, function() {
@@ -159,7 +206,7 @@ function getEvents(webRoot, service, ip) {
 	html = '';
 
 	if(!service.length) { alert('s:Error, meh!'); return html; }
-	if(!service.length) { alert('i:Error, meh!'); return html; }
+	if(!ip.length) { alert('i:Error, meh!'); return html; }
 
 	$.ajax({
 			async:    false,
@@ -184,34 +231,54 @@ function loadEventData(webRoot, id, data) {
 
 	if('null' != data) {
 		$("#" + id).load(webRoot + 'event-data/' + data);
+		new Hexdump(hex2a(data), {
+			container: id + '-hex'
+			, base: 'hex'
+			, width: 10
+			, ascii: true
+			, byteGrouping: 0
+			, html: false
+			, lineNumber: true
+			, style: {
+				lineNumberLeft: ''
+				, lineNumberRight: ':'
+				, stringLeft: '|'
+				, stringRight: '|'
+				, hexLeft: ''
+				, hexRight: ''
+				, hexNull: '.g'
+				, stringNull: '.'
+			}
+		});
 	}
+}
+
+// http://stackoverflow.com/questions/3745666/how-to-convert-from-hex-to-ascii-in-javascript
+function hex2a(hexx) {
+	var hex = hexx.toString();//force conversion
+	var str = '';
+	for (var i = 0; i < hex.length; i += 2)
+		str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+	return str;
+}
+
+function getBadHosts() {
+	html = '';
+	$.ajax({
+			async:    false,
+			dataType: 'json',
+			url:      'bad-hosts',
+			success:  function(data) {
+					var i = 0;
+					$.each(data, function() {
+							i++;
+							html += '<div id="bad-ip-' + i + '">' + this['remote_host'] + ' (' + this['ip_count'] + ')</div>';
+					});
+			}
+	});
+	return html;
 }
 
 function loadBadHosts() {
 	document.getElementById('main').innerHTML = getBadHosts();
 }
-
-function getTopService(days) {
-		days = typeof days !== 'undefined' ? days : 0;
-        html = '';
-        append_url = '';
-
-		if(days>0) {
-        	append_url = '/days/' + days;
-        }
-
-        $.ajax({
-                async:    false,
-                dataType: 'json',
-                url:      'top-service' + append_url,
-                success:  function(data) {
-                        var i = 0;
-                        $.each(data, function() {
-                                i++;
-                                html += '<div id="top-service-' + i + '">' + this['service'] + ' (' + this['service_count'] + ')</div>';
-                        });
-                }
-        });
-        return html;
-}
-
