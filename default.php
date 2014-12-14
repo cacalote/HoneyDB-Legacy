@@ -8,7 +8,7 @@ if(isset($_REQUEST['days'])) {
 <div class="container">
 
 <div id="main" style="margin-top:30px" align="center">
-	<div id="chartdiv" style="height:200px;width:800px;margin-bottom:30px;"></div>
+	<div id="date-chart" style="height:200px;width:800px;margin-bottom:30px;"></div>
 	<table align="center" width="90%">
 	<tr>
 		<td align="center">Top Attack Hosts<br><small>(last <?php echo $DAYS; ?> days)</small></td>
@@ -48,7 +48,7 @@ $(document).ready(function() {
 					dataType: 'json',
 					url:      'geoip/' + ip[0],
 					success:  function(data) {
-							html = '<div style="font-size:small;"><img src="https://foospidy.com/opt/honeydb/img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName'] + '</div>';
+							html = '<div style="font-size:small;"><img src="<?php echo $WEBROOT; ?>img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName'] + '</div>';
 							$('#top-ip-' + i).append(html);
 					}
 			});
@@ -71,7 +71,7 @@ $(document).ready(function() {
 	});
 
 	// main chart
-	var plot1 = $.jqplot('chartdiv', [s1], {
+	var plot1 = $.jqplot('date-chart', [s1], {
 		seriesDefaults:{
 				renderer:$.jqplot.BarRenderer,
 				rendererOptions: {fillToZero: true}
@@ -188,6 +188,13 @@ $(document).ready(function() {
 	);
 
 	// click on charts
+	$('#date-chart').bind('jqplotDataClick', 
+		function (ev, seriesIndex, pointIndex, data) {
+			url = 'view-date/' + t1[pointIndex] + '/ip';
+			location.href = url;
+		}
+	);
+
 	$('#top-ip-chart').bind('jqplotDataClick', 
 		function (ev, seriesIndex, pointIndex, data) {
 			url = 'view-ip/' + data[0].replace(/\[/g, '').replace(/\]/g, '');
