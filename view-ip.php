@@ -88,6 +88,8 @@ if('all' == $i) {
 		echo '<div>Request Data</div>';
 		echo '<textarea cols="100" rows="7" id="request-data">Select a RX event.</textarea>';
 		echo '<br><br>';
+		echo '<pre id="request-data-hex"></pre>';
+		echo '<br><br>';
 		echo 'Project HoneyPot';
 		echo '<pre id="projecthoneypot" style="width:100%;"></pre>';
 		echo '<br><br>';
