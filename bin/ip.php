@@ -1,7 +1,7 @@
 <?php
 include 'validate.ip.php';
-//$s = !isset($_GET['s']) ? $_GET['s'] = ' '   : strtolower(trim($_GET['s']));
 include 'validate.service.php';
+include 'validate.date.php';
 include 'validate.days.php';
 
 $where       = '';
@@ -14,21 +14,22 @@ if('all' != $i) {
 	if(strlen(trim($s))) {
 		$where = " AND service=?";
 		push_array($paramArray, '[' . $s . ']');
-        }
+	}
 
-        $rs = $db->Execute("SELECT remote_host, COUNT(remote_host) AS ip_count FROM honeypy WHERE remote_host=?  $where GROUP BY remote_host ORDER BY ip_count DESC;", $paramArray);
+	$rs = $db->Execute("SELECT remote_host, COUNT(remote_host) AS ip_count FROM honeypy WHERE remote_host=?  $where GROUP BY remote_host ORDER BY ip_count DESC;", $paramArray);
 
-        $ipArray = array();
+	$ipArray = array();
 
-        foreach($rs as $row) {
-                array_push($ipArray, $row);
-        }
+	foreach($rs as $row) {
+			array_push($ipArray, $row);
+	}
 
-        header("Content-type: text/plain");
-        echo json_encode($ipArray);
+	header("Content-type: text/plain");
+	echo json_encode($ipArray);
 
 } else {
-	if(all != $s) {
+	// if a service is specified
+	if('all' != $s) {
 		if(0 == $where_count) {
 			$where .= " WHERE";
 			$where_count++;
@@ -40,6 +41,20 @@ if('all' != $i) {
 		array_push($paramArray, '[' . $s . ']');
 	}
 
+	// if a date is specified
+	if('all' != $date) {
+		if(0 == $where_count) {
+			$where .= " WHERE";
+			$where_count++;
+		} else {
+			$where .= " AND";
+		}
+
+		$where .= " date=?";
+		array_push($paramArray, $date);
+	}
+
+	// if days are specified
 	if($days > 0) {
 		if(0 == $where_count) {
 			$where .= " WHERE";
