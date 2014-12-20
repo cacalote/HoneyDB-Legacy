@@ -80,31 +80,31 @@ switch($_GET['c']) {
 	case 'view-ip':
 		include('header.php');
 		include('view-ip.php');
-		include('footer.html');
+		include('footer.php');
 		break;
 
 	case 'view-service':
 		include('header.php');
 		include('view-service.php');
-		include('footer.html');
+		include('footer.php');
 		break;
 
 	case 'view-date':
 		include('header.php');
 		include('view-date.php');
-		include('footer.html');
+		include('footer.php');
 		break;
 
 	case 'about':
 		include('header.php');
 		include('about.php');
-		include('footer.html');
+		include('footer.php');
 		break;
 
 	default:
 		include('header.php');
 		include('default.php');
-		include('footer.html');
+		include('footer.php');
 		break;
 }
 ?>
