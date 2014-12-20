@@ -16,15 +16,15 @@ class session {
 	}
 
 	function set_sessionvar($key, $value="") {
-		$_SESSION[sessionvar]->$key = $value;
+		$_SESSION['sessionvar']->$key = $value;
 	}
 
 	function get_sessionvar($key) {
-		return $_SESSION[sessionvar]->$key;
+		return $_SESSION['sessionvar']->$key;
 	}
 	
 	function isset_sessionvar($key) {
-		return isset($_SESSION[sessionvar]->$key);
+		return isset($_SESSION['sessionvar']->$key);
 	}
 
 	function get_sessionid() {
@@ -33,7 +33,7 @@ class session {
 
 	function reset() {
 		$this->set_user_id();
-		$_SESSION[sessionvar] = NULL;
+		$_SESSION['sessionvar'] = NULL;
 		session_regenerate_id(true);
 	}
 
