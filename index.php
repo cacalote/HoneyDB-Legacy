@@ -1,15 +1,8 @@
 <?php
 require 'vendor/autoload.php';
-include 'lib/common-functions.php';
 include 'etc/configuration.php';
-
-if(!isset($_GET['c'])) { $_GET['c'] = 'default'; }
-
-// perform validation
-if(false == filter_var($_GET['c'], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[a-z-]{1,15}$/')))) {
-	echo 'c:Error. Meh!';
-	exit();
-}
+include 'lib/common-functions.php';
+include 'bin/validate.c.php';
 
 $db = NewADOConnection('mysql');
 $db->Connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
