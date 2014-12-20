@@ -22,6 +22,10 @@ class session {
 	function get_sessionvar($key) {
 		return $_SESSION[sessionvar]->$key;
 	}
+	
+	function isset_sessionvar($key) {
+		return isset($_SESSION[sessionvar]->$key);
+	}
 
 	function get_sessionid() {
 		return session_id();
@@ -33,13 +37,13 @@ class session {
 		session_regenerate_id(true);
 	}
 
-    function is_valid_session() {
-        if(!$this->get_user_id()) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+	function is_valid_session() {
+		if(!$this->get_user_id()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 	# constructor
 	function session() {
