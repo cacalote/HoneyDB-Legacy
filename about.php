@@ -1,6 +1,6 @@
 <div align="center" style="margin-top:25px;">
 	<div>HoneyDB</div>
-	<div>version 0.0.1</div>
+	<div>version <?php echo $VERSION; ?></div>
 	<div>https://github.com/foospidy/HoneyPy</div>
 
 	<br />
