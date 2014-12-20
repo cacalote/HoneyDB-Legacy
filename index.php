@@ -10,7 +10,11 @@ $db = NewADOConnection('mysql');
 $db->Connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
 
 /// session ///
-$user = new session();
+$session = new session();
+
+if(!$session->isset_sessionvar('days')) {
+	$session->set_sessionvar('days', $DEFAULT_DAYS);
+}
 
 switch($_GET['c']) {
 	case 'logger':
