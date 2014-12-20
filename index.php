@@ -1,11 +1,16 @@
 <?php
 require 'vendor/autoload.php';
 include 'etc/configuration.php';
+include 'lib/session.php';
 include 'lib/common-functions.php';
 include 'bin/validate.c.php';
 
+/// database conn ///
 $db = NewADOConnection('mysql');
 $db->Connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+
+/// session ///
+$user = new session();
 
 switch($_GET['c']) {
 	case 'logger':
