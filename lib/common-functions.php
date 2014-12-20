@@ -1,10 +1,13 @@
 <?php
 function get_days_dropdown($default=10) {
+	global $session;
+
 	$html  ='';
-	
-	if('view-date' != $_GET['c']) {
+
+	if('view-date' != $_GET['c'] && 'about' != $_GET['c']) {
 		if(isset($_REQUEST['days'])) {
-			$default = intval($_REQUEST['days']);
+			$session->set_sessionvar($_REQUEST['days']);
+			$default = $_REQUEST['days'];
 		}
 
 		$array = array(
