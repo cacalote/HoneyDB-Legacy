@@ -1,6 +1,6 @@
 <?php
 require 'vendor/autoload.php';
-include 'common-functions.php';
+include 'lib/common-functions.php';
 include 'etc/configuration.php';
 
 if(!isset($_GET['c'])) { $_GET['c'] = 'default'; }
