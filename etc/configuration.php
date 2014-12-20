@@ -1,5 +1,6 @@
 <?php
 // constants
+$VERSION        = '0.0.1';
 $WEBROOT        = '/honeydb/';
 $SHODAN_API_KEY = '';
 $PH_API_KEY     = '';
@@ -10,8 +11,8 @@ $DB_HOST        = 'localhost';
 $DB_NAME        = '';
 $DB_USER        = '';
 $DB_PASS        = '';
-$DEFAULT_DAYS   = 10;
 
+$DEFAULT_DAYS       = 10;
 $CHART_DAILY_Y_MAX  = 5000;
 ?>
 
