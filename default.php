@@ -1,9 +1,5 @@
 <?php
-if(isset($_REQUEST['days'])) {
-	$DAYS = intval($_REQUEST['days']);
-} else {
-	$DAYS = $DEFAULT_DAYS;
-}
+$DAYS = isset($_REQUEST['days']) ? $DAYS = $_REQUEST['days'] : $session->get_sessionvar('days');
 ?>
 <div class="container">
 
