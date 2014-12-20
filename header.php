@@ -30,6 +30,7 @@
 <script type="text/javascript" src="<?php echo $WEBROOT; ?>lib/jplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
 <script type="text/javascript" src="<?php echo $WEBROOT; ?>lib/jplot/plugins/jqplot.pointLabels.min.js"></script>
 
+<script type="text/javascript" src="<?php echo $WEBROOT; ?>lib/hexdump-min.js"></script>
 <script type="text/javascript" src="<?php echo $WEBROOT; ?>honeydb.js"></script>
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -66,4 +67,4 @@ $(document).ready(function() {
       </div>
 </div>
 
-<div class="container" align="right" style="margin-top:10px;width:800px;"><?php echo get_days_dropdown(); ?> </div>
+<div class="container" align="right" style="margin-top:10px;width:800px;"><?php echo get_days_dropdown($session->get_sessionvar('days')); ?> </div>
