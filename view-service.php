@@ -14,13 +14,14 @@ if('all' == $s) {
 	echo '<table style="width:800px;" align="center"><tr>';
 	echo '<td colspan="2"><div style="font-size:18px;">All Services</div></td></tr><tr>';
 	echo '<td valign="top" width="50%"><div id="service-all"></div></td>';
-	echo '<td valign="top"><div id="service-all-chart"></div></td>';
+	echo '<td valign="top"><div id="top-service-chart"></div><div id="top-service-chart-mouseover" align="center"></div><div id="top-service" style="display:none;"></div></td>';
 	echo '</tr></table>';
 	echo '</div>';
 
 	// /////// start javascript ///////
 	?>
 	<script language="javascript">
+	document.getElementById('top-service').innerHTML = getTopService(<?php echo $days; ?>);
 	document.getElementById("service-all").innerHTML = getServices('<?php echo $WEBROOT; ?>', '<?php echo $i; ?>', '', <?php echo $days;?>);
 
 	$('#service-all').children('div').click(function(event) {
@@ -38,15 +39,15 @@ if('all' == $s) {
 		url:      'top-service/days/<?php echo $days; ?>',
 		success:  function(data) {
 			$.each(data, function() {
-				ip = [];
-				ip.push(this['service'].toString());
-				ip.push(parseInt(this['service_count']));
-				pie_data.push(ip);
+				service = [];
+				service.push(this['service'].toString());
+				service.push(parseInt(this['service_count']));
+				pie_data.push(service);
 			});
 		}
 	});
 
-	var plot2 = jQuery.jqplot ('service-all-chart', [pie_data], {
+	var plot2 = jQuery.jqplot ('top-service-chart', [pie_data], {
 		title: 'Top 10',
 		seriesDefaults: {
 			// Make this a pie chart.
@@ -61,6 +62,13 @@ if('all' == $s) {
 		legend: { show: true, location: 'w' },
 		grid: {borderColor: 'white', shadow: false, drawBorder: true}
 	});
+	
+	$('#top-service-chart').bind('jqplotDataHighlight', 
+		function (ev, seriesIndex, pointIndex, data) {
+			info = data.toString().split(',');
+			$('#top-service-chart-mouseover').html(info[0] + '<br><small>(' + info[1] + ')</small>');
+		}
+	);
 	</script>
 	<?php
 	// /////// end javascript ///////
