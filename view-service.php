@@ -5,11 +5,6 @@ include 'bin/validate.ip.php';
 include 'bin/validate.days.php';
 
 if('all' == $s) {
-	$filter_text = '';
-	if(isset($_GET['d'])) {
-		$filter_text = 'for ' . $_GET['d'];
-	}
-	
 	echo '<div id="view">';
 	echo '<table style="width:800px;" align="center"><tr>';
 	echo '<td colspan="2"><div style="font-size:18px;">All Services</div></td></tr><tr>';
@@ -25,8 +20,8 @@ if('all' == $s) {
 	document.getElementById("service-all").innerHTML = getServices('<?php echo $WEBROOT; ?>', '<?php echo $i; ?>', '', <?php echo $days;?>);
 
 	$('#service-all').children('div').click(function(event) {
-			service = $(event.target).text().split(' (');
-			url = '<?php echo $WEBROOT; ?>view-service/' + service[0].replace(/\[/g, '').replace(/\]/g, '');
+			service       = $(event.target).text().split(' (');
+			url           = '<?php echo $WEBROOT; ?>view-service/' + service[0].replace(/\[/g, '').replace(/\]/g, '');
 			location.href = url;
 	});
 
