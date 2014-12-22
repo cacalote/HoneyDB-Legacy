@@ -1,14 +1,9 @@
 <?php
-$i = !isset($_GET['i']) ? $_GET['i'] = 'all' : trim($_GET['i']);
+include 'validate.ip.php';
 
 if(!strlen($PH_API_KEY)) {
-	echo 'k:Error, meh!';
+	echo 'k:Error, meh! If you need a Project Honeypot API key go to http://www.projecthoneypot.org/httpbl_api.php.';
 	exit();
-}
-
-if(false == filter_var($i, FILTER_VALIDATE_IP) && 'all' != $i) {
-        echo 'i:Error, meh!';
-        exit();
 }
 
 $DAYS         = 1;
