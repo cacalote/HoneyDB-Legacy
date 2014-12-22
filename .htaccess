@@ -42,9 +42,13 @@ RewriteRule ^service/?$ index.php?c=service
 RewriteRule ^service-port/([\w-\.]+)?$ index.php?c=service-port&s=$1
 
 RewriteRule ^event/?$ index.php?c=event
+
 RewriteRule ^event/service/([\w-\.]+)/?$ index.php?c=event&s=$1
 RewriteRule ^event/ip/([\w\.]+)/?$ index.php?c=event&i=$1
 RewriteRule ^event/service/([\w-\.]+)/ip/([\w\.]+)/?$ index.php?c=event&s=$1&i=$2
+
+RewriteRule ^event/date/([\d-]+)/service/([\w-\.]+)/ip/([\w\.]+)/?$ index.php?c=event&date=$1&s=$2&i=$3
+
 RewriteRule ^event/ip/([\w\.]+)/service/([\w-\.]+)/?$ index.php?c=event&i=$1&s=$2
 RewriteRule ^event-data/(.+)/?$ index.php?c=event-data&h=$1
 RewriteRule ^bad-hosts/?$ index.php?c=bad-hosts
