@@ -224,6 +224,35 @@ function getEvents(webRoot, service, ip) {
 	return html;
 }
 
+function getEventsByDate(webRoot, date, service, ip) {
+	// parameters
+	webRoot = typeof webRoot !== 'undefined' ? webRoot : '/';
+	date    = typeof date    !== 'undefined' ? date : '';
+	service = typeof service !== 'undefined' ? service.replace(/\[/g, '').replace(/\]/g, '') : '';
+	ip      = typeof ip      !== 'undefined' ? ip : '';
+	// local variables
+	html    = '';
+
+	if(!date.length)    { alert('d:Error, meh!'); return html; }
+	if(!service.length) { alert('s:Error, meh!'); return html; }
+	if(!ip.length)      { alert('i:Error, meh!'); return html; }
+
+	$.ajax({
+		async:    false,
+		dataType: 'json',
+		url:      webRoot + 'event/date/' + date + '/service/' + service + '/ip/' + ip,
+		success:  function(data) {
+			var i = 0;
+			$.each(data, function() {
+				i++;
+				bytes = null !== this['bytes'] ? this['bytes'] : '';
+				html += '<div id="event-' + i + '" onclick="loadEventData(\'' + webRoot + '\', \'request-data\', \'' + this['data'] + '\');">' + this['date_time'] + ' '  + this['event'] + ' '  + bytes + '</div>';
+			});
+		}
+	});
+	return html;
+}
+
 function loadEventData(webRoot, id, data) {
 	webRoot = typeof webRoot !== 'undefined' ? webRoot : '/';
 	id      = typeof id      !== 'undefined' ? id : '';
