@@ -4,8 +4,10 @@ include 'validate.ip.php';
 include 'validate.date.php';
 include 'validate.days.php';
 
-$paramArray = array();
-
+$paramArray  = array();
+$where       = '';
+$where_count = 0;
+	
 if('all' != $s) {
 	$where = '';
 	
@@ -29,8 +31,9 @@ if('all' != $s) {
 	echo json_encode($serviceArray);
 
 } else {
-	$where       = '';
-	$where_count = 0;
+	// constrain to connect events only
+	$where .= " WHERE event='CONNECT'";
+	$where_count++;
 
 	// if a ip is specified
 	if(filter_var($i, FILTER_VALIDATE_IP)) {
