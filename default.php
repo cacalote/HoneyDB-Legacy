@@ -38,39 +38,39 @@ $(document).ready(function() {
 	// get flag/country for each ip
 	i = 0;
 	$('#top-ip').children('div').each(function(i) {
-			ip = $(this).text().split('(');
-			$.ajax({
-					async:    false,
-					dataType: 'json',
-					url:      'geoip/' + ip[0],
-					success:  function(data) {
-							html = '<div style="font-size:small;"><img src="<?php echo $WEBROOT; ?>img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName'] + '</div>';
-							$('#top-ip-' + i).append(html);
-					}
-			});
-			i++;
+		ip = $(this).text().split('(');
+		$.ajax({
+			async:    false,
+			dataType: 'json',
+			url:      'geoip/' + ip[0],
+			success:  function(data) {
+				html = '<div style="font-size:small;"><img src="<?php echo $WEBROOT; ?>img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName'] + '</div>';
+				$('#top-ip-' + i).append(html);
+			}
+		});
+		i++;
 	});
 
 	// charting
 	s1 = []; // series data
 	t1 = []; // tick data
 	$.ajax({
-			async:    false,
-			dataType: 'json',
-			url:      'chart-data/bar/days/<?php echo $DAYS; ?>',
-			success:  function(data) {
-					$.each(data, function() {
-							s1.push(this['day_count']);
-							t1.push(this['day']);
-					});
-			}
+		async:    false,
+		dataType: 'json',
+		url:      'chart-data/bar/days/<?php echo $DAYS; ?>',
+		success:  function(data) {
+			$.each(data, function() {
+				s1.push(this['day_count']);
+				t1.push(this['day']);
+			});
+		}
 	});
 
 	// main chart
 	var plot1 = $.jqplot('date-chart', [s1], {
 		seriesDefaults:{
-				renderer:$.jqplot.BarRenderer,
-				rendererOptions: {fillToZero: true}
+			renderer:$.jqplot.BarRenderer,
+			rendererOptions: {fillToZero: true}
 		},	
         axes: {
 			// Use a category axis on the x axis and use our custom ticks.
@@ -100,17 +100,17 @@ $(document).ready(function() {
 	var pie_data = [];
 	
 	$.ajax({
-			async:    false,
-			dataType: 'json',
-			url:      'top-ip/days/<?php echo $DAYS; ?>',
-			success:  function(data) {
-					$.each(data, function() {
-							ip = [];
-							ip.push(this['remote_host'].toString());
-							ip.push(parseInt(this['ip_count']));
-							pie_data.push(ip);
-					});
-			}
+		async:    false,
+		dataType: 'json',
+		url:      'top-ip/days/<?php echo $DAYS; ?>',
+		success:  function(data) {
+			$.each(data, function() {
+				ip = [];
+				ip.push(this['remote_host'].toString());
+				ip.push(parseInt(this['ip_count']));
+				pie_data.push(ip);
+			});
+		}
 	});
 
 	var plot2 = jQuery.jqplot ('top-ip-chart', [pie_data], { 
@@ -132,17 +132,17 @@ $(document).ready(function() {
 	var pie_data = [];
 
 	$.ajax({
-			async:    false,
-			dataType: 'json',
-			url:      'top-service/days/<?php echo $DAYS; ?>',
-			success:  function(data) {
-					$.each(data, function() {
-							service = [];
-							service.push(this['service'].toString());
-							service.push(parseInt(this['service_count']));
-							pie_data.push(service);
-					});
-			}
+		async:    false,
+		dataType: 'json',
+		url:      'top-service/days/<?php echo $DAYS; ?>',
+		success:  function(data) {
+			$.each(data, function() {
+				service = [];
+				service.push(this['service'].toString());
+				service.push(parseInt(this['service_count']));
+				pie_data.push(service);
+			});
+		}
 	});
 
 	var plot3 = jQuery.jqplot ('top-service-chart', [pie_data], { 
@@ -206,15 +206,15 @@ $(document).ready(function() {
 	);
 
 	$('#top-ip').children('div').click(function(event) {
-			ip = $(event.target).text().split(' (');
-			url = 'view-ip/' + ip[0];
-			location.href = url;
+		ip = $(event.target).text().split(' (');
+		url = 'view-ip/' + ip[0];
+		location.href = url;
 	});
 
 	$('#top-service').children('div').click(function(event) {
-			service = $(event.target).text().split(' (');
-			url = 'view-service/' + service[0].replace(/\[/g, '').replace(/\]/g, '');
-			location.href = url;
+		service = $(event.target).text().split(' (');
+		url = 'view-service/' + service[0].replace(/\[/g, '').replace(/\]/g, '');
+		location.href = url;
 	});
 });
 </script>
