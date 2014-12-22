@@ -28,6 +28,10 @@ if('all' != $i) {
 	echo json_encode($ipArray);
 
 } else {
+	// constrain to connect events only
+	$where .= " WHERE event='CONNECT'";
+	$where_count++;
+
 	// if a service is specified
 	if('all' != $s) {
 		if(0 == $where_count) {
