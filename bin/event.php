@@ -1,4 +1,5 @@
 <?php
+include 'validate.date.php';
 include 'validate.services.php';
 include 'validate.ip.php';
 include 'validate.days.php';
@@ -36,6 +37,18 @@ if($days > 0) {
 
 	$where .= " date >= (CURDATE() - INTERVAL ? DAY) ";
 	array_push($paramArray, $days);
+}
+
+if('all' != $date) {
+	if(0 == $where_count) {
+		$where .= " WHERE";
+		$where_count++;
+	} else {
+		$where .= " AND";
+	}
+
+	$where .= " date = ? ";
+	array_push($paramArray, $date);
 }
 
 $rs = $db->Execute("SELECT date_time, event, data, bytes FROM honeypy $where ORDER BY date_time ASC;", $paramArray);
