@@ -96,7 +96,7 @@ $('#hosts').children('div').click(function(event) {
 	document.getElementById('request-data').innerHTML = 'Select a RX event';
 	document.getElementById('ip-info').innerHTML = ip[0];
 	document.getElementById('tools').style.display = '';
-	document.getElementById('events').innerHTML = getEvents('<?php echo $WEBROOT; ?>', '<?php echo $s; ?>', ip[0]);
+	document.getElementById('events').innerHTML = getEventsByDate('<?php echo $WEBROOT; ?>', '<?php echo $date; ?>', '<?php echo $s; ?>', ip[0]);
 	$("#projecthoneypot").load('<?php echo $WEBROOT; ?>projecthoneypot/' + ip[0]);
 	$("#shodan").load('<?php echo $WEBROOT; ?>shodan/' + ip[0]);
 });
@@ -104,7 +104,7 @@ $('#hosts').children('div').click(function(event) {
 $('#services').children('div').click(function(event) {
 	service = $(event.target).text().split(' (');
 	document.getElementById('service-info').innerHTML = service[0];
-	document.getElementById('events').innerHTML = getEvents('<?php echo $WEBROOT; ?>', service[0], '<?php echo $i; ?>');
+	document.getElementById('events').innerHTML = getEventsByDate('<?php echo $WEBROOT; ?>', '<?php echo $date; ?>', service[0], '<?php echo $i; ?>');
 });
 
 /*
