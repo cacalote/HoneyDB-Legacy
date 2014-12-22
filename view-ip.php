@@ -79,6 +79,7 @@ if('all' == $i) {
 		}
 	);
 
+	// uncomment this section to display flag/country for each IP. This will cause the page to take a while to complete loading
 	/*
 	$('#ip-all').children('div').each(function(i) {
 			i++;
