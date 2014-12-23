@@ -60,8 +60,3 @@ RewriteRule ^view-date/?$ index.php?c=view-date
 RewriteRule ^view-date/([\d-]+)/?$ index.php?c=view-date&d=$1
 RewriteRule ^view-date/([\w-]+)/ip/?$ index.php?c=view-date&date=$1&v=ip
 RewriteRule ^view-date/([\w-]+)/service/?$ index.php?c=view-date&date=$1&v=service
-
-RewriteRule ^date/?$ index.php?c=date
-RewriteRule ^date/([\w-]+)/?$ index.php?c=date&d=$1
-RewriteRule ^date/([\w-]+)/days/(\d+)/?$ index.php?c=date&d=$1&days=$2
-RewriteRule ^date/([\w-]+)/?$ index.php?c=date&d=$1
