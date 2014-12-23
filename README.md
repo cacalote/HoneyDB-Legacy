@@ -13,7 +13,7 @@ Getting started:
 3. Download latest Geo IP database from http://dev.maxmind.com/geoip/geoip2/geolite2/. Make sure you get the "GeoLite2 City" .mmdb file. Copy it to HoneyDB's usr/data/ directory.
 
 4. Create database. Suggested database name is "honeydb" but you can name whatever you like. Once you've created your database use the create.sql script to create the database table. Example command line:
-mysql -u <db username> -p <db name> < create.sql
+'''mysql -u <db username> -p <db name> < create.sql'''
 
 5. Configure HoneyDB by editing the constants section of the `etc/configuration.php` file:
 ```php
