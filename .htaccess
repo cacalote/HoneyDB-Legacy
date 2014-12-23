@@ -1,12 +1,3 @@
-# Apache headers; enable headers module: a2enmod headers
-Header set X-Frame-Options "DENY"
-Header set X-Content-Type-Options "nosniff"
-
-# Apache mod_rewrite for HoneyDB
-RewriteEngine on
-# be sure to set the RewriteBase to the same as $WEBROOT in index.php
-RewriteBase /honeydb/
-
 RewriteRule ^((etc/?|usr/?|data/?)) - [R=404,L,NC]
 RewriteRule ^logger/?$ index.php?c=logger
 RewriteRule ^geoip/(.+)/?$ index.php?c=geoip&i=$1
@@ -15,12 +6,16 @@ RewriteRule ^top-ip/?$ index.php?c=top-ip
 RewriteRule ^top-ip/days/(\d+)/?$ index.php?c=top-ip&b=days&days=$1
 RewriteRule ^top-service/?$ index.php?c=top-service
 RewriteRule ^top-service/days/(\d+)/?$ index.php?c=top-service&days=$1
+RewriteRule ^about/?$ index.php?c=about
+
+RewriteRule ^bad-hosts/?$ index.php?c=bad-hosts
+RewriteRule ^chart-data/(.+)/days/(\d+)/?$ index.php?c=chart-data&a=bar&days=$2
+RewriteRule ^chart-data/(.+)/?$ index.php?c=chart-data&a=bar
+
 RewriteRule ^shodan/([\w\.]+)/?$ index.php?c=shodan&i=$1
 RewriteRule ^projecthoneypot/([\w\.]+)/?$ index.php?c=projecthoneypot&i=$1
 
-
 RewriteRule ^ip/all/date/([\w-]+)/?$ index.php?c=ip&date=$1
-
 RewriteRule ^ip/all/([\w-\.]+)/days/([\d]+)/?$ index.php?c=ip&s=$1&days=$2
 RewriteRule ^ip/all/days/([\d]+)/?$ index.php?c=ip&days=$1
 RewriteRule ^ip/all/?$ index.php?c=ip
@@ -28,32 +23,22 @@ RewriteRule ^ip/(.+)/([\w-\.]+)/?$ index.php?c=ip&i=$1&s=$2
 RewriteRule ^ip/([\w\-\.]+)/?$ index.php?c=ip&i=$1
 RewriteRule ^ip/?$ index.php?c=ip
 
-
-
 RewriteRule ^service/all/date/([\w-]+)/?$ index.php?c=service&date=$1
-
 RewriteRule ^service/([\d\.])/?$ index.php?c=service&i=$1
 RewriteRule ^service/([\w\-\.]+)/([\d\.]+)/?$ index.php?c=service&s=$1&i=$2
 RewriteRule ^service/all/all/days/([\d]+)/?$ index.php?c=service&days=$1
-
-#RewriteRule ^service/(.+)/(.+)/?$ index.php?c=service&s=$1&i=$2
 RewriteRule ^service/([\w\.]+)/?$ index.php?c=service&s=$1
 RewriteRule ^service/?$ index.php?c=service
 RewriteRule ^service-port/([\w-\.]+)?$ index.php?c=service-port&s=$1
 
 RewriteRule ^event/?$ index.php?c=event
-
 RewriteRule ^event/service/([\w-\.]+)/?$ index.php?c=event&s=$1
 RewriteRule ^event/ip/([\w\.]+)/?$ index.php?c=event&i=$1
 RewriteRule ^event/service/([\w-\.]+)/ip/([\w\.]+)/?$ index.php?c=event&s=$1&i=$2
-
 RewriteRule ^event/date/([\d-]+)/service/([\w-\.]+)/ip/([\w\.]+)/?$ index.php?c=event&date=$1&s=$2&i=$3
-
 RewriteRule ^event/ip/([\w\.]+)/service/([\w-\.]+)/?$ index.php?c=event&i=$1&s=$2
+
 RewriteRule ^event-data/(.+)/?$ index.php?c=event-data&h=$1
-RewriteRule ^bad-hosts/?$ index.php?c=bad-hosts
-RewriteRule ^chart-data/(.+)/days/(\d+)/?$ index.php?c=chart-data&a=bar&days=$2
-RewriteRule ^chart-data/(.+)/?$ index.php?c=chart-data&a=bar
 
 RewriteRule ^view-ip/?$ index.php?c=view-ip
 RewriteRule ^view-ip/(.+)/?$ index.php?c=view-ip&i=$1
@@ -62,27 +47,12 @@ RewriteRule ^view-service/?$ index.php?c=view-service
 RewriteRule ^view-service/([\d-]+)/?$ index.php?c=view-service&d=$1
 RewriteRule ^view-service/([\w-\.]+)/?$ index.php?c=view-service&s=$1
 
-
-# view-date
 RewriteRule ^view-date/?$ index.php?c=view-date
 RewriteRule ^view-date/([\d-]+)/?$ index.php?c=view-date&d=$1
-
-#RewriteRule ^view-date/([\d-]+)/days/(\d+)/?$ index.php?c=view-date&d=$1&days=$3
-
 RewriteRule ^view-date/([\w-]+)/ip/?$ index.php?c=view-date&date=$1&v=ip
 RewriteRule ^view-date/([\w-]+)/service/?$ index.php?c=view-date&date=$1&v=service
-#RewriteRule ^view-date/([\d-]+)/ip/([\d\.]+)/?$ index.php?c=view-date&d=$1&v=ip&i=$2					# by date, by ip
-#RewriteRule ^view-date/([\d-]+)/ip/([\d\.]+)/days/(\d+)/?$ index.php?c=view-date&d=$1&v=ip&i=$2&d=$3	# by date, by ip, within days
 
-#RewriteRule ^view-date/([\d-]+)/service/([\w-\.]+)/?$ index.php?c=view-date&v=service&d=$1
-
-# date
 RewriteRule ^date/?$ index.php?c=date
 RewriteRule ^date/([\w-]+)/?$ index.php?c=date&d=$1
 RewriteRule ^date/([\w-]+)/days/(\d+)/?$ index.php?c=date&d=$1&days=$2
-
-#RewriteRule ^date/([\d-]+)/ip/([\d\.]+)/?$ index.php?c=date&d=$1&v=$2									# by date, by ip
-#RewriteRule ^date/([\d-]+)/ip/([\d\.]+)/days/(\d+)/?$ index.php?c=view-date&d=$1&v=ip&i=$2&d=$3			# by date, by ip, within days
 RewriteRule ^date/([\w-]+)/?$ index.php?c=date&d=$1
-
-RewriteRule ^about/?$ index.php?c=about
