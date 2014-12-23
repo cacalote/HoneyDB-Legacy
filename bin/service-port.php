@@ -1,15 +1,7 @@
 <?php
-$s = !isset($_GET['s']) ? $_GET['s'] = 'service-not-provided' : trim($_GET['s']);
+include 'validate.service.php';
 
-if(false == filter_var($_GET['s'], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[a-zA-Z-\.]{1,25}$/')))) {
-        echo 's:Error. Meh!';
-        exit();
-}
-
-$where = " WHERE service=? ";
-
-$rs = $db->Execute("SELECT local_port FROM honeypy $where LIMIT 1;", array('[' . $s . ']'));
-
+$rs           = $db->Execute("SELECT local_port FROM honeypy WHERE service=? LIMIT 1;", array('[' . $s . ']'));
 $serviceArray = array();
 
 foreach($rs as $row) {
@@ -18,5 +10,4 @@ foreach($rs as $row) {
 
 header("Content-type: text/plain");
 echo json_encode($serviceArray);
-
 ?>
