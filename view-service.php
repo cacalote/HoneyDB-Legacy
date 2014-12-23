@@ -75,7 +75,7 @@ if('all' == $s) {
 	echo '<td valign="top"><div id="hosts"></div></td>';
 	echo '<td valign="top"><div id="events"></div></td>';
 	echo '<td valign="top">';
-		echo '<div id="tools" style="display:none;">Tools: <button id="php">php</button> <button id="dshield">dshield</button> <button id="firyx">firyx</button> <button id="twitter">twitter</button> <button id="google">google</button> <button id="virustotal">virus total</button></div><br>';
+		echo '<div id="tools" style="display:none;">Tools: <button id="dshield">dshield</button> <button id="firyx">firyx</button> <button id="twitter">twitter</button> <button id="google">google</button> <button id="virustotal">virus total</button></div><br>';
 		echo '<div id="ip-info">&nbsp;</div>';
 		echo '<div>Request Data</div>';
 		echo '<textarea cols="100" rows="7" id="request-data">Select a RX event.</textarea>';
