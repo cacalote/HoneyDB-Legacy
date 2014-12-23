@@ -29,15 +29,17 @@ switch($v) {
 		echo '<td valign="top"><div id="hosts"></div></td>';
 		echo '<td valign="top"><div id="events"></div></td>';
 		echo '<td valign="top">';
-			echo '<div id="tools">Tools: <button id="php">php</button> <button id="dshield">dshield</button> <button id="firyx">firyx</button></div><br>';
+			echo '<div id="tools">Tools: <button id="dshield">dshield</button> <button id="firyx">firyx</button> <button id="twitter">twitter</button> <button id="google">google</button> <button id="virustotal">virus total</button></div><br>';
 			echo '<div id="ip-info">&nbsp;</div>';
 			echo '<div>Request Data</div>';
 			echo '<textarea cols="100" rows="7" id="request-data">Select a RX event.</textarea>';
 			echo '<br><br>';
 			echo '<pre id="request-data-hex"></pre>';
 			echo '<br><br>';
-			//echo 'Host Ports and  Banners';
-			//echo '<textarea cols="100" rows="7" id="shodan"></textarea>';
+			echo 'Project HoneyPot';
+			echo '<pre id="projecthoneypot" style="width:100%;"></pre>';
+			echo '<br><br>';
+			echo 'Host Ports and  Banners';
 			echo '<pre id="shodan" style="width:100%;"></pre>';
 			echo '<br><br>';
 		echo '</td></tr></table>';
@@ -48,16 +50,11 @@ switch($v) {
 		echo '<td valign="top"><div id="services"></div></td>';
 		echo '<td valign="top"><div id="events"></div></td>';
 		echo '<td valign="top">';
-			echo '<div id="tools">Tools: <button id="php">php</button> <button id="dshield">dshield</button> <button id="firyx">firyx</button></div><br>';
 			echo '<div id="service-info">&nbsp;</div>';
 			echo '<div>Request Data</div>';
 			echo '<textarea cols="100" rows="7" id="request-data">Select a RX event.</textarea>';
 			echo '<br><br>';
 			echo '<pre id="request-data-hex"></pre>';
-			echo '<br><br>';
-			//echo 'Host Ports and  Banners';
-			//echo '<textarea cols="100" rows="7" id="shodan"></textarea>';
-			echo '<pre id="shodan" style="width:100%;"></pre>';
 			echo '<br><br>';
 		echo '</td></tr></table>';
 		break;
@@ -76,6 +73,8 @@ echo '<script language="javascript">';
 switch($v) {
 	case 'ip':
 		echo 'document.getElementById("hosts").innerHTML    = getHostsByDate("' . $WEBROOT . '", "' . $date . '");';
+		echo '$("#projecthoneypot").load("' . $WEBROOT . 'projecthoneypot/' . $i . '");';
+		echo '$("#shodan").load("' . $WEBROOT . '/shodan/' . $i . '");';
 		break;
 
 	case 'service':
@@ -107,36 +106,28 @@ $('#services').children('div').click(function(event) {
 	document.getElementById('events').innerHTML = getEventsByDate('<?php echo $WEBROOT; ?>', '<?php echo $date; ?>', service[0], '<?php echo $i; ?>');
 });
 
-/*
-$.ajax({
-	async:    false,
-	dataType: 'json',
-	url:      '<?php echo $WEBROOT; ?>geoip/<?php echo $i; ?>',
-	success:  function(data) {
-		$('#country').append('<img src="https://foospidy.com/opt/honeydb/img/flags/' + data['countryIsoCode'].toLowerCase() + '.png"> ' + data['countryName']);
-	}
-});
-
-document.getElementById("dates").innerHTML = getServices('<?php echo $WEBROOT; ?>', '<?php echo $i; ?>');
-
-
-
-$("#shodan").load('<?php echo $WEBROOT; ?>shodan/<?php echo $i; ?>');
-
-$('#php').click(function(event) {
-        event.preventDefault();
-        window.open('https://www.projecthoneypot.org/ip_<?php echo $i; ?>', 'php', 'width=800,height=600,toolbar=no,scrollbars=yes');
-});
-
 $('#dshield').click(function(event) {
         event.preventDefault();
-        window.open('https://www.dshield.org/ipinfo.html?ip=<?php echo $i; ?>', 'dshield-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
+        window.open('https://www.dshield.org/ipinfo.html?ip=' + document.getElementById('ip-info').innerHTML, 'dshield-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
 });
 
-https://www.firyx.com/whois?ip=91.109.20.135
 $('#firyx').click(function(event) {
         event.preventDefault();
-        window.open('https://www.firyx.com/whois?ip=<?php echo $i; ?>', 'firyx-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
+        window.open('https://www.firyx.com/whois?ip=' + document.getElementById('ip-info').innerHTML, 'firyx-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
 });
-*/
+
+$('#twitter').click(function(event) {
+        event.preventDefault();
+        window.open('https://twitter.com/search?f=realtime&q=' + document.getElementById('ip-info').innerHTML + '&src=typd', 'twitter-ip-info', 'width=1200,height=600,toolbar=no,scrollbars=yes');
+});
+
+$('#google').click(function(event) {
+        event.preventDefault();
+        window.open('https://www.google.com/#q=' + document.getElementById('ip-info').innerHTML + '&src=typd', 'google-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
+});
+
+$('#virustotal').click(function(event) {
+        event.preventDefault();
+        window.open('https://www.virustotal.com/en/ip-address/' + document.getElementById('ip-info').innerHTML + '/information/', 'virustotal-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
+});
 </script>
