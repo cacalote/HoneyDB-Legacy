@@ -101,7 +101,7 @@ if('all' == $i) {
 
 } else {
 	echo '<div id="view">';
-	echo '<div id="view-title">Analysis for ' . $i . '</div>';
+	echo '<div id="view-title">Analysis for <span id="ip-info">' . $i . '</span></div>';
 	echo '<div id="country"></div>';
 	echo '<table width="90%"><tr><td>Services</td><td>Events</td><td></td></tr><tr>';
 	echo '<td valign="top"><div id="services"></div></td>';
@@ -147,30 +147,29 @@ $('#services').children('div').click(function(event) {
 $("#projecthoneypot").load('<?php echo $WEBROOT; ?>projecthoneypot/<?php echo $i; ?>');
 $("#shodan").load('<?php echo $WEBROOT; ?>shodan/<?php echo $i; ?>');
 
-
 $('#dshield').click(function(event) {
         event.preventDefault();
-        window.open('https://www.dshield.org/ipinfo.html?ip=<?php echo $i; ?>', 'dshield-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
+        window.open('https://www.dshield.org/ipinfo.html?ip=' + document.getElementById('ip-info').innerHTML, 'dshield-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
 });
 
 $('#firyx').click(function(event) {
         event.preventDefault();
-        window.open('https://www.firyx.com/whois?ip=<?php echo $i; ?>', 'firyx-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
+        window.open('https://www.firyx.com/whois?ip=' + document.getElementById('ip-info').innerHTML, 'firyx-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
 });
 
 $('#twitter').click(function(event) {
         event.preventDefault();
-        window.open('https://twitter.com/search?f=realtime&q=<?php echo $i; ?>&src=typd', 'twitter-ip-info', 'width=1200,height=600,toolbar=no,scrollbars=yes');
+        window.open('https://twitter.com/search?f=realtime&q=' + document.getElementById('ip-info').innerHTML + '&src=typd', 'twitter-ip-info', 'width=1200,height=600,toolbar=no,scrollbars=yes');
 });
 
 $('#google').click(function(event) {
         event.preventDefault();
-        window.open('https://www.google.com/#q=<?php echo $i; ?>&src=typd', 'google-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
+        window.open('https://www.google.com/#q=' + document.getElementById('ip-info').innerHTML + '&src=typd', 'google-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
 });
 
 $('#virustotal').click(function(event) {
         event.preventDefault();
-        window.open('https://www.virustotal.com/en/ip-address/<?php echo $i; ?>/information/', 'virustotal-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
+        window.open('https://www.virustotal.com/en/ip-address/' + document.getElementById('ip-info').innerHTML + '/information/', 'virustotal-ip-info', 'width=800,height=600,toolbar=no,scrollbars=yes');
 });
 </script>
 <?php   
