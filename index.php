@@ -6,8 +6,8 @@ include 'lib/common-functions.php';
 include 'bin/validate.c.php';
 
 /// database conn ///
-$db = NewADOConnection('mysql');
-$db->Connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+$db = &ADONewConnection('mysql');
+$db->PConnect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
 
 /// session ///
 $session = new session();
