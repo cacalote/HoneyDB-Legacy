@@ -13,7 +13,7 @@ if('all' != $i) {
  
 	if(strlen(trim($s))) {
 		$where = " AND service=?";
-		push_array($paramArray, '[' . $s . ']');
+		push_array($paramArray, $s);
 	}
 
 	$rs = $db->Execute("SELECT remote_host, COUNT(remote_host) AS ip_count FROM honeypy WHERE remote_host=?  $where GROUP BY remote_host ORDER BY ip_count DESC;", $paramArray);
@@ -42,7 +42,7 @@ if('all' != $i) {
 		}
 
 		$where .= " service=?";
-		array_push($paramArray, '[' . $s . ']');
+		array_push($paramArray, $s);
 	}
 
 	// if a date is specified

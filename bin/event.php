@@ -13,11 +13,11 @@ if('all' != $s || 'all' != $i) {
 
 	if('all' != $s && 'all' != $i) {
 		$where .= "service=? AND remote_host=?";
-		array_push($paramArray, '[' . $s . ']', $i);
+		array_push($paramArray, $s, $i);
 		$where_count++;
 	} elseif('all' != $s) {
 		$where .= "service=?";
-		array_push($paramArray, '[' . $s . ']');
+		array_push($paramArray, $s);
 		$where_count++;
 	} elseif('all' != $i) {
 		$where .= "remote_host=?";

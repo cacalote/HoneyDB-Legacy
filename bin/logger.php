@@ -40,7 +40,7 @@ if('yes' == strtolower($LOGGER_ENABLE)) {
 	}
 
 	if($authenticated) {
-		$parameterArray = array($_POST['date'], $_POST['time'], $_POST['date_time'], $_POST['millisecond'], $_POST['event'], $_POST['local_host'], $_POST['local_port'], $_POST['service'], $_POST['remote_host'], $_POST['remote_port'], $_POST['data'], $_POST['bytes'], $_POST['data_hash']);
+		$parameterArray = array($_POST['date'], $_POST['time'], $_POST['date_time'], $_POST['millisecond'], $_POST['event'], $_POST['local_host'], $_POST['local_port'], str_replace(']', '', str_replace('[', '', $_POST['service'])), $_POST['remote_host'], $_POST['remote_port'], $_POST['data'], $_POST['bytes'], $_POST['data_hash']);
 
 		$sql = "INSERT INTO honeypy (date, time, date_time, millisecond, event, local_host, local_port, service, remote_host, remote_port";
 
