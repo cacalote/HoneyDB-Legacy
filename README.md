@@ -37,5 +37,5 @@ Getting log data:
 There are two methods of getting log data from HoneyPy. First you can enable the `[honeypysql]` option in the `honeypy.cfg` file (https://github.com/foospidy/HoneyPy/blob/master/etc/honeypy.cfg). This option generates `.sql` files that can then be used to import the data directly into the database. Second, you can enable the `[honeydb]` option in the `honeypy.cfg` file. The `url` parameter should be pointed at: `https://<your server>/honeydb/logger`. And the secret parameter should be a long random value to mitigate unauthorized posts, or attacks, against HoneyDB.
 
 NOTE: Originally service names were wrapped in brackets, e.g. [telnet]. Now HoneyDB expects the service name without brackets. The logger will strip the brackets if they are present. If you have service names with brackets in your database you will need to run the following sql commands:
-'''update honeypy set service=REPLACE(service, '[', '');'''
-'''update honeypy set service=REPLACE(service, ']', '');'''
+'update honeypy set service=REPLACE(service, '[', '');'
+'update honeypy set service=REPLACE(service, ']', '');'
