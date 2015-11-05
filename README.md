@@ -1,6 +1,8 @@
 HoneyDB
 =======
 
+No longer making updates to this code base. Probably do not use, unless you really want to :)
+
 Database and web interface for HoneyPy honeypot logs. Example, http://www.foospidy.com/opt/honeydb/
 
 
